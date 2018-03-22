@@ -1,5 +1,9 @@
+{{--Backend for contact us is not implemented yet--}}
+{{--This is the page which is shown at first--}}
+{{--No need to log in to view this page--}}
+{{--Has the facility to contact the admin through Contact Us--}}
 
-<!doctype html>
+        <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
@@ -16,7 +20,6 @@
     <link href="{{ url('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('fonts/stylesheet.css') }}" rel="stylesheet" type="text/css" />
-
 
     <!--For Plugins external css-->
     <link href="{{ url('css/plugins.css') }}" rel="stylesheet" type="text/css" />
@@ -49,20 +52,18 @@
                                     <span class="icon-bar"></span>
                                 </button>
                                 <a class="navbar-brand" href="#home">
-                                    <img src="{{URL::asset('/images/logo.png')}}">
+                                    <img src="{{URL::asset('/images/logo1.png')}}">
                                 </a>
                             </div>
 
                             <!-- Collect the nav links, forms, and other content for toggling -->
-
-
-
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav navbar-right">
                                     <li><a href="#home">Home</a></li>
                                     <li><a href="#service">Service</a></li>
                                     <li><a href="#contact">Contact</a></li>
-                                    <li><a href="#contact">Log In</a></li>
+                                    <li><a href="{{route('loginForm')}}">Log In</a></li>
+                                    <li><a href="{{route('registrationForm')}}">Sign Up</a></li>
                                 </ul>
                             </div>
 
@@ -72,12 +73,8 @@
             </div>
 
         </div>
-
     </div>
 </header> <!--End of header -->
-
-
-
 
 
 <section id="home" class="home">
@@ -88,8 +85,8 @@
                     <div class="main_home_slider text-center">
                         <div class="single_home_slider">
                             <div class="main_home wow fadeInUp" data-wow-duration="700ms">
-                                <h1>Have an amazing business meeting</h1>
-                                <p class="subtitle">Small business with big dreams</p>
+                                <h1>FACEBOOK SHOP</h1>
+                                <p class="subtitle">start your dream business...</p>
 
                                 <div class="home_btn">
                                     <a href="" class="btn btn-md">Learn More</a>
@@ -99,8 +96,8 @@
                         </div>
                         <div class="single_home_slider">
                             <div class="main_home wow fadeInUp" data-wow-duration="700ms">
-                                <h1>Have an amazing business meeting</h1>
-                                <p class="subtitle">Small business with big dreams</p>
+                                <h1>Have Your Own Shop</h1>
+                                <p class="subtitle">be your own boss...</p>
 
                                 <div class="home_btn">
                                     <a href="" class="btn btn-md">Learn More</a>
@@ -110,8 +107,8 @@
                         </div>
                         <div class="single_home_slider">
                             <div class="main_home wow fadeInUp" data-wow-duration="700ms">
-                                <h1>Have an amazing business meeting</h1>
-                                <p class="subtitle">Small business with big dreams</p>
+                                <h1>Conquer Facebook</h1>
+                                <p class="subtitle">sell online...</p>
 
                                 <div class="home_btn">
                                     <a href="" class="btn btn-md">Learn More</a>
@@ -126,10 +123,6 @@
     </div>
 </section>
 
-
-
-
-
 <section id="service" class="service">
     <div class="container">
         <div class="row">
@@ -137,7 +130,8 @@
                 <div class="col-sm-6">
                     <div class="signle_service_left">
                         <h2>What
-                            We
+                            You
+                            Can
                             Do</h2>
                     </div>
                 </div>
@@ -148,9 +142,9 @@
                                 <i class="lnr lnr-laptop-phone"></i>
                             </div>
                             <div class="single_service_content">
-                                <h3>Web Design</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, </p>
+                                <h3>Create Your Shop</h3>
+                                <p>Design your own shop in a mouse click. You are your own boss. You can choose from multiple available templates
+                                    which suits our business an taste.</p>
                             </div>
                         </div>
                         <div class="single_service">
@@ -158,9 +152,9 @@
                                 <i class="lnr lnr-screen"></i>
                             </div>
                             <div class="single_service_content">
-                                <h3>UI/UX Design</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, </p>
+                                <h3>Business Analysis</h3>
+                                <p>Get to know your trending products. Get to know your peak business hours. Get to know your
+                                    least significant product. </p>
                             </div>
                         </div>
                         <div class="single_service">
@@ -168,9 +162,9 @@
                                 <i class="lnr lnr-picture"></i>
                             </div>
                             <div class="single_service_content">
-                                <h3>Photography</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, </p>
+                                <h3>Showcase Your Products</h3>
+                                <p>No matter what products / services, showcase them to the world. How you are going to shocase them is in your hand.
+                                    Add multiple images.... let the customers rate your products.... have a forum....</p>
                             </div>
                         </div>
                         <div class="single_service">
@@ -178,9 +172,8 @@
                                 <i class="lnr lnr-laptop-phone"></i>
                             </div>
                             <div class="single_service_content">
-                                <h3>App Development</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, </p>
+                                <h3>Sell on Facebook</h3>
+                                <p>Make Facebook, the largest social network, our place of business. Capture the heart of 2.2 billion users</p>
                             </div>
                         </div>
                     </div>
@@ -199,9 +192,8 @@
                     <div class="main_choose_content text-left">
                         <div class="single_choose_content">
                             <h1>Exceptional Customer Service</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                sed do eiusmod tempor Lorem ipsum dolor sit amet
-                                consectetur adipiscing elit.</p>
+                            <p>We will be available 24 / 7 at your service. Ask any inquiries. Just drop a message and our team
+                                will get to you. </p>
 
                             <a href="" class="btn btn-larg">Need to help? lets Chat <i class="lnr lnr-arrow-right"></i></a>
                         </div>
@@ -217,8 +209,8 @@
         <div class="row">
             <div class="main_contact sections">
                 <div class="head_title text-center">
-                    <h2>Contact</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+                    <h2>Contact Us</h2>
+                    <p></p>
                 </div>
 
                 <div class="row">
@@ -227,15 +219,15 @@
                         <div class="col-sm-6 col-xs-12">
                             <h4>Leave A Message</h4>
                             <div class="single_contant_left">
-                                <form action="#" id="formid">
+                                <form action="{{url('FormController')}}" id="formid" method="POST">
                                     <!--<div class="col-lg-8 col-md-8 col-sm-10 col-lg-offset-2 col-md-offset-2 col-sm-offset-1">-->
-
+                                    {{csrf_field()}}
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="name" placeholder="first name" required="">
+                                        <input type="text" class="form-control" name="name" placeholder="first name">
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="email" class="form-control" name="email" placeholder="Email" required="">
+                                        <input type="email" class="form-control" name="email" placeholder="Email">
                                     </div>
 
                                     <div class="form-group">
@@ -255,15 +247,14 @@
                             <div class="single_message_right_info">
                                 <h4>Address :</h4>
                                 <ul>
-                                    <li><a href=""><i class="fa fa-home"></i> 69/A , Road 3, Mohammadia Housing Ltd
-                                            Dhaka - 1207</a></li>
-                                    <li><a href=""><i class="fa fa-phone"></i> +008 8017 0000 5072 7522</a></li>
+                                    <li><a href=""><i class="fa fa-home"></i> 56 / 5, Kaladdy Amman kovil Road Jaffna</a></li>
+                                    <li><a href=""><i class="fa fa-phone"></i> +94 77 2479350</a></li>
 
-                                    <li><a href=""><i class="fa fa-envelope"></i> muslimmahin@gmail.com</a></li>
+                                    <li><a href=""><i class="fa fa-envelope"></i> gunavaran.15@cse.mrt.ac.lk</a></li>
                                 </ul>
                             </div>
                         </div>
-                    </div> <!-- End of messsage contant-->
+                    </div> <!-- End of messsage content-->
                 </div>
             </div>
         </div>
@@ -281,7 +272,7 @@
 
                 <div class="col-sm-6 col-xs-12">
                     <div class="copyright_text">
-                        <p class=" wow fadeInRight" data-wow-duration="1s">Made with <i class="fa fa-heart"></i> by <a href="http://bootstrapthemes.co">Bootstrap Themes</a>2016. All Rights Reserved</p>
+                        <p class=" wow fadeInRight" data-wow-duration="1s">©Futura Labs 2018. All Rights Reserved</p>
                     </div>
                 </div>
 
