@@ -15,9 +15,13 @@ class Message extends Model
 {
 
     protected $fillable = [
+        'message_id',
         'name',
         'email',
-        'message'
+        'message',
+        'status',
+        'created_at'
     ];
     protected $table ="message";
+    protected $primaryKey = 'message_id';
 }

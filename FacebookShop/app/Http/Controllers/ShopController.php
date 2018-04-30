@@ -55,7 +55,7 @@ class ShopController extends Controller
     }
 
     public function showShopDetails(){
-        return view('shopDetails');
+        return view ('shopDetails',['username' => Session::get('username')]);
     }
 
     public function updateShopData(Request $request){

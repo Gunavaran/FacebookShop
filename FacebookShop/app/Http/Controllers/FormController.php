@@ -13,6 +13,7 @@ use App\Http\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
 class FormController extends Controller
@@ -25,19 +26,21 @@ class FormController extends Controller
      */
     public function saveMessageData(Request $request){
 
+        $this -> validate($request,[
+            'email' => 'required|email|max:255',
+            'message' => 'required|max:255',
+            'name' => 'required'
+        ]);
+
         $message = new Message();
         $message -> name = $request['name'];
         $message -> email = $request['email'];
         $message -> message = $request['message'];
 
         $message -> save();
+        Session::flash('success','Message has been sent Successfully!!!');
+        return redirect() -> route('home');
 
-        return view('home');
-
-    }
-
-    public function showMyDetails(){
-        return view('myDetails');
     }
 
     public function updateUserDetails(Request $request){
@@ -73,6 +76,21 @@ class FormController extends Controller
             Session::flash('error', 'Incorrect Old Password');
             return redirect() -> route('changePassword');
         }
+
+    }
+
+    public function markAsRead(){
+        $message = Message::where('message_id',Input::get('messageId'))->first();
+        $message->status = '1';
+        $message->save();
+        return redirect()->route('showMessages');
+
+    }
+    public function markAsUnread(){
+        $message = Message::where('message_id',Input::get('messageId'))->first();
+        $message->status = '0';
+        $message->save();
+        return redirect()->route('showMessages');
 
     }
 

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -12,15 +11,15 @@
     <title>Facebook Shop</title>
 
     <!-- Bootstrap -->
-    <link href="{{ url('vendorsTemplate/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ url('vendorsTemplate/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet"/>
     <!-- Font Awesome -->
-    <link href="{{ url('vendorsTemplate/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
+    <link href="{{ url('vendorsTemplate/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"/>
     <!-- NProgress -->
-    <link href="{{ url('vendorsTemplate/nprogress/nprogress.css') }}" rel="stylesheet" />
+    <link href="{{ url('vendorsTemplate/nprogress/nprogress.css') }}" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
-    <link href="{{ url('vendorsTemplate/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+    <link href="{{ url('vendorsTemplate/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet"/>
     <!-- Custom Theme Style -->
-    <link href="{{ url('build/css/custom.min.css') }}" rel="stylesheet" />
+    <link href="{{ url('build/css/custom.min.css') }}" rel="stylesheet"/>
 </head>
 
 <body class="nav-md">
@@ -29,7 +28,8 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="{{route('dashboard')}}" class="site_title"><i class="fa fa-paw"></i> <span>Facebook Shop</span></a>
+                    <a href="{{route('dashboard')}}" class="site_title"><i class="fa fa-paw"></i>
+                        <span>Facebook Shop</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -48,7 +48,7 @@
                 </div>
                 <!-- /menu profile quick info -->
 
-                <br />
+                <br/>
 
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -75,12 +75,13 @@
 
                             <li><a><i class="fa fa-home"></i> Products <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="#">Add Product</a></li>
+                                    <li><a href="{{route('showNewProductForm')}}">Add Product</a></li>
                                     <li><a href="#">Product Details</a></li>
                                 </ul>
                             </li>
 
-                            <li><a><i class="fa fa-home"></i> Notifications <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-home"></i><a href="{{route('showMessages')}}">Notifications </a>
+                                    <span class="fa fa-chevron-down"></span></a>
 
                             </li>
 
@@ -119,7 +120,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
                                 <img src="" alt="">Guna
                                 <span class=" fa fa-angle-down"></span>
                             </a>
@@ -132,19 +134,21 @@
                                     </a>
                                 </li>
                                 <li><a href="javascript:;">Help</a></li>
-                                <li><a href="{{route('logout')}}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                <li><a href="{{route('logout')}}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                </li>
                             </ul>
                         </li>
 
                         <li role="presentation" class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+                               aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="badge bg-green">6</span>
                             </a>
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                 <li>
                                     <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -156,7 +160,7 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -168,7 +172,7 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -180,7 +184,7 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -240,22 +244,25 @@
 <!-- Chart.js -->
 <script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Chart.js/dist/Chart.min.js') }}"></script>
 <!-- jQuery Sparklines -->
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/jquery-sparkline/dist/jquery.sparkline.min.js') }}"></script>
-<!-- Flot -->
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Flot/jquery.flot.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Flot/jquery.flot.pie.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Flot/jquery.flot.time.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Flot/jquery.flot.stack.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Flot/jquery.flot.resize.js') }}"></script>
-<!-- Flot plugins -->
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/flot.orderbars/js/jquery.flot.orderBars.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/flot-spline/js/jquery.flot.spline.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/flot.curvedlines/curvedLines.js') }}"></script>
-<!-- DateJS -->
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/DateJS/build/date.js') }}"></script>
-<!-- bootstrap-daterangepicker -->
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/moment/min/moment.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script type="text/javascript"
+        src="{{ URL::asset('vendorsTemplate/jquery-sparkline/dist/jquery.sparkline.min.js') }}"></script>
+<!-- jQuery Tags Input -->
+<script src="{{ URL::asset('vendorsTemplate/jquery.tagsinput/src/jquery.tagsinput.js') }}"></script>
+{{--<!-- Flot -->--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Flot/jquery.flot.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Flot/jquery.flot.pie.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Flot/jquery.flot.time.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Flot/jquery.flot.stack.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/Flot/jquery.flot.resize.js') }}"></script>--}}
+{{--<!-- Flot plugins -->--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/flot.orderbars/js/jquery.flot.orderBars.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/flot-spline/js/jquery.flot.spline.min.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/flot.curvedlines/curvedLines.js') }}"></script>--}}
+{{--<!-- DateJS -->--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/DateJS/build/date.js') }}"></script>--}}
+{{--<!-- bootstrap-daterangepicker -->--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/moment/min/moment.min.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/bootstrap-daterangepicker/daterangepicker.js') }}"></script>--}}
 
 <!-- Custom Theme Scripts -->
 <script type="text/javascript" src="{{ URL::asset('build/js/custom.min.js') }}"></script>

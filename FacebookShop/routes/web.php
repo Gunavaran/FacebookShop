@@ -15,6 +15,8 @@
 //===========================================================Log In and Registration========================================
 
 //to display the log in form
+use Illuminate\Support\Facades\Route;
+
 Route::get('/loginform', 'AuthController@showLogInForm' )-> name('loginForm');
 
 //to display vendor registration form
@@ -37,6 +39,10 @@ Route::get('/', 'ViewController@showHome')-> name('home');
 //dashboard layout. no content
 Route::get('dashboard', 'ViewController@showDashboard') -> name('dashboard');
 
+//route to the contact us form on home page which will store user message to message table
+Route::post('/FormController/Message','FormController@saveMessageData') -> name('contactUsForm');
+
+
 //====================================================Shop==================================================
 
 /*
@@ -53,9 +59,24 @@ Route::get('/dashboard/shopDetails','ShopController@showShopDetails') -> name('s
 
 //to display and update shop details
 Route::post('/dashboard/updateShopDetails', 'ShopController@updateShopData') -> name('updateShopDetails');
+//=================================================Product======================================================
+
+Route::get('dashboard/newProduct','ProductController@showNewProductForm')-> name('showNewProductForm');
+Route::get('dashboard/categories','ProductController@showCategories')->name('showCategories');
+Route::post('dashboard/storeCategory','ProductController@storeCategory')->name('storeCategory');
+Route::post('dashboard/removeCategory','productController@removeCategory')->name('removeCategory');
+Route::post('dashboard/addProduct','ProductController@addProduct')->name("addNewProduct");
+
+//=================================================Messages and Notifications======================================================
+Route::get('dashboard/messages','ViewController@showMessages')->name('showMessages');
+
+Route::get('dashboard/readMessage','FormController@markAsRead')->name('markAsRead');
+Route::get('dashboard/unreadMessage','FormController@markAsUnread')->name('markAsUnread');
+
+
 //=================================================User======================================================
 //route to My Details tab where you can look up your details and also can update them
-Route::get('/dashboard/myDetails', 'FormController@showMyDetails') -> name('myDetails');
+Route::get('/dashboard/myDetails', 'ViewController@showMyDetails') -> name('myDetails');
 
 //to update user details
 Route::post('/dashboard/updateDetails','FormController@updateUserDetails')->name('updateUserDetails');
@@ -63,12 +84,15 @@ Route::post('/dashboard/updateDetails','FormController@updateUserDetails')->name
 //to change password
 Route::post('/dashboard/updatePassword','FormController@updatePassword')->name('updatePassword');
 
-
-
 //route to Change Password tab.
 Route::get('/dashboard/changePassword', function () {
     return view('changePassword');
 }) -> name('changePassword');
 
-//route to the contact us form on home page which will store user message to message table
-Route::post('/FormController/Message','FormController@saveMessageData');
+
+//=============================================Admin===================================================
+Route::get('/dashboard/userList','ViewController@showUserList')->name('showUsersList');
+Route::get('/dashboard/specificShop','ViewController@showSpecificShop')->name('showSpecificShop');
+
+Route::get('/dashboard/shopsList','ViewController@showShopList')->name('showShopsList');
+Route::get('/dashboard/specificVendor','ViewController@showSpecificVendor')->name('showSpecificVendor');

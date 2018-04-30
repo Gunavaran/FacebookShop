@@ -64,11 +64,13 @@ class AuthController extends Controller
         } elseif(DB::table('vendor')-> where('email',$request['email'])->value('admin')) {
             //admin log in
             Session::put('username',DB::table('vendor')-> where('email',$request['email']) -> value('username'));
-            return redirect()->route('dashboard', ['message' =>'hei admin']);
+            Session::put('admin','true');
+            return view('layout.adminDashboard');
         } else{
             //vendor log in
             Session::put('username',DB::table('vendor')-> where('email',$request['email']) -> value('username'));
-            return view('layout.dashboard',['message' => 'success']);
+            Session::put('admin','false');
+            return view('layout.adminDashboard');
         }
 
     }

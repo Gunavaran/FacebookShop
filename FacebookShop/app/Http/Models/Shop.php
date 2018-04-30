@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Models;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Created by PhpStorm.
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Shop extends Model{
     protected $fillable = [
+        'shop_id',
         'shop_name',
         'description',
         'contact_no',
@@ -18,8 +20,16 @@ class Shop extends Model{
         'street',
         'city',
         'country',
-        'zip_code'
+        'zip_code',
+        'username',
+        'created_at'
     ];
     protected $table ="shop";
     protected $primaryKey = 'shop_id';
+
+    public function getShopId(){
+        $shop = Shop::where('username', Session::get('username'))->first();
+        $shopId = $shop->shop_id;
+        return $shopId;
+    }
 }
