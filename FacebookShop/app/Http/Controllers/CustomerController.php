@@ -9,8 +9,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\Customer;
+use App\Http\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
 class CustomerController extends Controller
@@ -33,14 +35,14 @@ class CustomerController extends Controller
             'password' => 'required|max:255'
         ]);
 
-        $password = Customer::where('email',$request->email)->first();
+        $password = Customer::where('email', $request->email)->first();
 
-        if($password == null){
-            Session::flash('error','Email does not exist. Please check your email.');
+        if ($password == null) {
+            Session::flash('error', 'Email does not exist. Please check your email.');
             return view('templates.titan.customerLogIn');
 
-        } elseif (!Hash::check($request['password'],$password->password)){
-            Session::flash('error','Incorrect Password');
+        } elseif (!Hash::check($request['password'], $password->password)) {
+            Session::flash('error', 'Incorrect Password');
             return view('templates.titan.customerLogIn');
         } else {
             Session::put('customer', $request->email);
@@ -75,6 +77,32 @@ class CustomerController extends Controller
     {
         Session::forget('customer');
         return redirect()->route('showTemplateHome');
+    }
+
+    public function rateProduct(Request $request)
+    {
+        $this->validate($request, [
+            'rating' => 'required',
+            'feedback' => 'nullable|max:255'
+        ]);
+
+        $productId = Input::get('productId');
+        $customerId = Customer::where('email', Input::get('customerEmail'))->value('customer_id');
+
+        if(Feedback::where('product_id',$productId)->where('customer_id',$customerId)->first()){
+            Session::flash('ratingFailure','You can rate a product only once');
+            return redirect()->route('singleProduct',['productId'=>$productId]);
+        }
+
+        $feedback = new Feedback();
+        $feedback->product_id = $productId;
+        $feedback->customer_id = $customerId;
+        $feedback->rating = $request->rating;
+        $feedback->feedback = $request->feedback;
+        $feedback->save();
+        Session::flash('ratingSuccess','Successfully saved');
+        return redirect()->route('singleProduct',['productId'=>$productId]);
+
     }
 
 }

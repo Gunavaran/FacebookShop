@@ -194,4 +194,17 @@ JavaScripts
         src="{{ URL::asset('titan/lib/simple-text-rotator/jquery.simple-text-rotator.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('titan/js/plugins.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('titan/js/main.js') }}"></script>
-
+@if(Session::has('ratingSuccess'))
+    <script type='text/javascript'>
+        $(window).on('load',function () {
+            $('#successMessage').modal('show');
+        });
+    </script>
+@endif
+@if(Session::has('ratingFailure'))
+    <script type='text/javascript'>
+        $(window).on('load',function () {
+            $('#failureMessage').modal('show');
+        });
+    </script>
+@endif

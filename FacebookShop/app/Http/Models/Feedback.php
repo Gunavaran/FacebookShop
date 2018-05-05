@@ -17,6 +17,7 @@ class Feedback extends Model
         'customer_id',
         'product_id',
         'feedback',
+        'rating',
         'created_at',
         'updated_at'
     ];

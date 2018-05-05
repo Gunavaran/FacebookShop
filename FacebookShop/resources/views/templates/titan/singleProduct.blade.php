@@ -13,14 +13,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 mb-sm-40"><a class="gallery"><img
-                                src="{{URL::asset('storage/'.$shopId.'/thumbnails/'.$image)}}" alt="Single Product Image"/></a>
+                                src="{{URL::asset('storage/'.$shopId.'/thumbnails/'.$image)}}"
+                                alt="Single Product Image"/></a>
                     {{--<ul class="product-gallery">--}}
-                        {{--<li><a class="gallery" href="assets/images/shop/product-8.jpg"></a><img--}}
-                                    {{--src="assets/images/shop/product-8.jpg" alt="Single Product"/></li>--}}
-                        {{--<li><a class="gallery" href="assets/images/shop/product-9.jpg"></a><img--}}
-                                    {{--src="assets/images/shop/product-9.jpg" alt="Single Product"/></li>--}}
-                        {{--<li><a class="gallery" href="assets/images/shop/product-10.jpg"></a><img--}}
-                                    {{--src="assets/images/shop/product-10.jpg" alt="Single Product"/></li>--}}
+                    {{--<li><a class="gallery" href="assets/images/shop/product-8.jpg"></a><img--}}
+                    {{--src="assets/images/shop/product-8.jpg" alt="Single Product"/></li>--}}
+                    {{--<li><a class="gallery" href="assets/images/shop/product-9.jpg"></a><img--}}
+                    {{--src="assets/images/shop/product-9.jpg" alt="Single Product"/></li>--}}
+                    {{--<li><a class="gallery" href="assets/images/shop/product-10.jpg"></a><img--}}
+                    {{--src="assets/images/shop/product-10.jpg" alt="Single Product"/></li>--}}
                     {{--</ul>--}}
                 </div>
                 <div class="col-sm-6">
@@ -39,13 +40,14 @@
                     </div>
                     <div class="row mb-20">
                         <div class="col-sm-12">
-                            <div class="price font-alt"><span class="amount">{{$product->currency_type.' '.$product->price}}</span></div>
+                            <div class="price font-alt"><span
+                                        class="amount">{{$product->currency_type.' '.$product->price}}</span></div>
                         </div>
                     </div>
                     <div class="row mb-20">
                         <div class="col-sm-12">
                             <div class="description">
-                                <p style="font-size: medium">{{$product -> description}}</p>
+                                <p style="font-size: large">{{$product -> description}}</p>
                             </div>
                         </div>
                     </div>
@@ -66,12 +68,58 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="container">
             <div class="row mt-70">
                 <div class="col-sm-12">
+                    <div class="comment-form mt-30">
+                        <h4 style="font-size: xx-large;" class="comment-form-title font-alt"><b>Add review</b></h4>
+                        <form method="post"
+                              action="{{route('rateProduct',['productId' => $product->product_id,'customerEmail' => Session::get('customer') ])}}">
+                            {{csrf_field()}}
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <select class="form-control" name="rating" style="font-size: medium">
+                                            <option selected="true" disabled="">Rating</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                                <textarea style="font-size: medium" class="form-control" id="feedback"
+                                                          name="feedback" rows="4"
+                                                          placeholder="Review"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <button style="font-size: medium" class="btn btn-round btn-d" type="submit">Submit
+                                        Review
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row mt-70" >
+                <div class="col-sm-12">
                     <ul class="nav nav-tabs font-alt" role="tablist">
-                        <li><a href="#data-sheet" data-toggle="tab"><span class="icon-tools-2"></span>Product Details</a>
+                        <li><a href="#data-sheet" style="font-size: large" data-toggle="tab"><span
+                                        class="icon-tools-2"></span><b>Product
+                                    Details</b></a>
                         </li>
-                        <li><a href="#reviews" data-toggle="tab"><span class="icon-tools-2"></span>Reviews (2)</a></li>
+                        <li><a href="#reviews" style="font-size: large" data-toggle="tab"><span
+                                        class="icon-tools-2"></span><b>Reviews</b> </a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="data-sheet">
@@ -106,204 +154,173 @@
                         </div>
                         <div class="tab-pane" id="reviews">
                             <div class="comments reviews">
+                                <?php
+                                use App\Http\Models\Feedback;
+                                use App\Http\Models\Customer;
+
+                                $feedbacks = Feedback::where('product_id', $product->product_id)->get();
+                                foreach($feedbacks as $feedback){
+                                $customerId = $feedback->customer_id;
+                                $firstName = Customer::where('customer_id', $customerId)->value('first_name');
+                                $lastName = Customer::where('customer_id', $customerId)->value('last_name');
+                                $customerName = $firstName . ' ' . $lastName;
+                                $rating = $feedback->rating;
+
+                                ?>
                                 <div class="comment clearfix">
-                                    <div class="comment-avatar"><img src="" alt="avatar"/></div>
                                     <div class="comment-content clearfix">
-                                        <div class="comment-author font-alt"><a href="#">John Doe</a></div>
+                                        <div class="comment-author font-alt"><p style="font-size:medium;">
+                                                <b>{{$customerName}}</b></p></div>
                                         <div class="comment-body">
-                                            <p>The European languages are members of the same family. Their separate
-                                                existence is a myth. For science, music, sport, etc, Europe uses the
-                                                same vocabulary. The European languages are members of the same family.
-                                                Their separate existence is a myth.</p>
+                                            <p style="font-size:medium;"> {{$feedback->feedback}}</p>
                                         </div>
-                                        <div class="comment-meta font-alt">Today, 14:55 -<span><i
-                                                        class="fa fa-star star"></i></span><span><i
-                                                        class="fa fa-star star"></i></span><span><i
-                                                        class="fa fa-star star"></i></span><span><i
-                                                        class="fa fa-star star"></i></span><span><i
-                                                        class="fa fa-star star-off"></i></span>
+                                        <div class="comment-meta font-alt"><p
+                                                    style="font-size:medium;">{{$feedback->created_at}} -
+                                                <?php
+                                                for($i = 0; $i < $rating;$i++){
+                                                ?>
+                                                <span><i class="fa fa-star star"></i></span>
+                                                <?php
+                                                }
+
+                                                for($i = 0; $i < 5 - $rating;$i++){
+                                                ?>
+                                                <span><i class="fa fa-star star-off"></i></span>
+                                                <?php
+                                                }
+                                                ?>
+
+
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="comment clearfix">
-                                    <div class="comment-avatar"><img src="" alt="avatar"/></div>
-                                    <div class="comment-content clearfix">
-                                        <div class="comment-author font-alt"><a href="#">Mark Stone</a></div>
-                                        <div class="comment-body">
-                                            <p>Europe uses the same vocabulary. The European languages are members of
-                                                the same family. Their separate existence is a myth.</p>
-                                        </div>
-                                        <div class="comment-meta font-alt">Today, 14:59 -<span><i
-                                                        class="fa fa-star star"></i></span><span><i
-                                                        class="fa fa-star star"></i></span><span><i
-                                                        class="fa fa-star star"></i></span><span><i
-                                                        class="fa fa-star star-off"></i></span><span><i
-                                                        class="fa fa-star star-off"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment-form mt-30">
-                                <h4 class="comment-form-title font-alt">Add review</h4>
-                                <form method="post">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <div class="form-group">
-                                                <label class="sr-only" for="name">Name</label>
-                                                <input class="form-control" id="name" type="text" name="name"
-                                                       placeholder="Name"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="form-group">
-                                                <label class="sr-only" for="email">Name</label>
-                                                <input class="form-control" id="email" type="text" name="email"
-                                                       placeholder="E-mail"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="form-group">
-                                                <select class="form-control">
-                                                    <option selected="true" disabled="">Rating</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="" name="" rows="4"
-                                                          placeholder="Review"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <button class="btn btn-round btn-d" type="submit">Submit Review</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="modal fade success-popup" id="successMessage" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Thank You!</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="lead">Your feedback is saved successfully</p>
+                    {{--<a  class="rd_more btn btn-default">OK</a>--}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade success-popup" id="failureMessage" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Sorry!!!</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="lead">You can rate a product only once.</p>
+                    {{--<a  class="rd_more btn btn-default">OK</a>--}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider-w">
+    <section class="module-medium">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <h2 class="module-title font-alt"><b>Related Products</b></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="owl-carousel text-center" data-items="4" data-pagination="false" data-navigation="false">
+                    <?php
+                    $productCategory = $product->product_category;
+
+                    $relatedProducts = Product::where('shop_id', $shopId)->where('product_category', $productCategory)->where('product_id', '!=', $product->product_id)->get();
+
+                    foreach($relatedProducts as $relatedProduct){
+                    $image = $relatedProduct->file_name;
+                    $productName = $relatedProduct->product_name;
+                    $price = $relatedProduct->currency_type . ' ' . $relatedProduct->price;
+                    ?>
+                    {{--<div class="col-sm-6 col-md-3 col-lg-3">--}}
+                    {{--<div class="shop-item">--}}
+                    {{--<div class="shop-item-image"><img src="{{URL::asset('storage/'.$shopId.'/thumbnails/'.$image)}}"--}}
+                    {{--/>--}}
+                    {{--<div class="shop-item-detail"><a href="{{route('singleProduct',['productId' => $relatedProduct->product_id])}}" class="btn btn-round btn-b"><span class="icon-basket">Click For More</span></a>--}}
+                    {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<h4 class="shop-item-title font-alt"><a href="{{route('singleProduct',['productId' => $relatedProduct->product_id])}}">{{$productName}}</a></h4>{{$price}}--}}
+                    {{--</div>--}}
+                    {{--</div>--}}
+
+                    <div class="owl-item">
+                        <div class="col-sm-12">
+                            <div class="ex-product"><a style="font-size:medium;"
+                                                       href="{{route('singleProduct',['productId' => $relatedProduct->product_id])}}"><img
+                                            src="{{URL::asset('storage/'.$shopId.'/thumbnails/'.$image)}}"
+                                    /></a>
+                                <h4 class="shop-item-title font-alt"><a style="font-size:medium;"
+                                                                        href="{{route('singleProduct',['productId' => $relatedProduct->product_id])}}">{{$productName}}</a>
+                                </h4>
+                                <a style="font-size:medium;"
+                                   href="{{route('singleProduct',['productId' => $relatedProduct->product_id])}}">{{$price}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
     </section>
     <hr class="divider-w">
-    <section class="module-small">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
-                    <h2 class="module-title font-alt">Related Products</h2>
-                </div>
-            </div>
-            <div class="row multi-columns-row">
-                <div class="col-sm-6 col-md-3 col-lg-3">
-                    <div class="shop-item">
-                        <div class="shop-item-image"><img src="assets/images/shop/product-11.jpg"
-                                                          alt="Accessories Pack"/>
-                            <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a>
-                            </div>
-                        </div>
-                        <h4 class="shop-item-title font-alt"><a href="#">Accessories Pack</a></h4>£9.00
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-3">
-                    <div class="shop-item">
-                        <div class="shop-item-image"><img src="assets/images/shop/product-12.jpg"
-                                                          alt="Men’s Casual Pack"/>
-                            <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a>
-                            </div>
-                        </div>
-                        <h4 class="shop-item-title font-alt"><a href="#">Men’s Casual Pack</a></h4>£12.00
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-3">
-                    <div class="shop-item">
-                        <div class="shop-item-image"><img src="assets/images/shop/product-13.jpg" alt="Men’s Garb"/>
-                            <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a>
-                            </div>
-                        </div>
-                        <h4 class="shop-item-title font-alt"><a href="#">Men’s Garb</a></h4>£6.00
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-3">
-                    <div class="shop-item">
-                        <div class="shop-item-image"><img src="assets/images/shop/product-14.jpg" alt="Cold Garb"/>
-                            <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Add To Cart</span></a>
-                            </div>
-                        </div>
-                        <h4 class="shop-item-title font-alt"><a href="#">Cold Garb</a></h4>£14.00
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <hr class="divider-w">
-    <section class="module">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
-                    <h2 class="module-title font-alt">Exclusive products</h2>
-                    <div class="module-subtitle font-serif">The languages only differ in their grammar, their
-                        pronunciation and their most common words.
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
-                    <div class="owl-item">
-                        <div class="col-sm-12">
-                            <div class="ex-product"><a href="#"><img src="assets/images/shop/product-1.jpg"
-                                                                     alt="Leather belt"/></a>
-                                <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£12.00
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-item">
-                        <div class="col-sm-12">
-                            <div class="ex-product"><a href="#"><img src="assets/images/shop/product-3.jpg"
-                                                                     alt="Derby shoes"/></a>
-                                <h4 class="shop-item-title font-alt"><a href="#">Derby shoes</a></h4>£54.00
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-item">
-                        <div class="col-sm-12">
-                            <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg"
-                                                                     alt="Leather belt"/></a>
-                                <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-item">
-                        <div class="col-sm-12">
-                            <div class="ex-product"><a href="#"><img src="assets/images/shop/product-4.jpg"
-                                                                     alt="Leather belt"/></a>
-                                <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£14.00
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-item">
-                        <div class="col-sm-12">
-                            <div class="ex-product"><a href="#"><img src="assets/images/shop/product-5.jpg"
-                                                                     alt="Chelsea boots"/></a>
-                                <h4 class="shop-item-title font-alt"><a href="#">Chelsea boots</a></h4>£44.00
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-item">
-                        <div class="col-sm-12">
-                            <div class="ex-product"><a href="#"><img src="assets/images/shop/product-6.jpg"
-                                                                     alt="Leather belt"/></a>
-                                <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    {{--<section class="module">--}}
+    {{--<div class="container">--}}
+    {{--<div class="row">--}}
+    {{--<div class="col-sm-6 col-sm-offset-3">--}}
+    {{--<h2 class="module-title font-alt">Exclusive products</h2>--}}
+    {{--<div class="module-subtitle font-serif">The languages only differ in their grammar, their--}}
+    {{--pronunciation and their most common words.--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--<div class="row">--}}
+    {{--<div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">--}}
+
+    {{--<div class="owl-item">--}}
+    {{--<div class="col-sm-12">--}}
+    {{--<div class="ex-product"><a href="#"><img src="assets/images/shop/product-1.jpg"--}}
+    {{--alt="Leather belt"/></a>--}}
+    {{--<h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£12.00--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</section>--}}
+
 @endsection

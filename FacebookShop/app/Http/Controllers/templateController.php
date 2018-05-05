@@ -126,7 +126,6 @@ class templateController
         Session::put('sorting', $productSort);
         return redirect()->route('showTemplateHome');
 
-
     }
 
     public function singleProduct(){

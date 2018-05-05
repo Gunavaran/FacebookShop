@@ -115,9 +115,12 @@ Route::post('dashboard/Templates/removeSliderText','templateController@removeSli
 Route::get('searchProductCategory','templateController@searchProductCategory')->name('searchProductCategory');
 Route::get('showTemplateHome','viewController@showTemplateHome')->name('showTemplateHome');
 Route::get('customerLogIn','CustomerController@customerLogInPage')->name('customerLogInPage');
+Route::get('singleProduct','templateController@singleProduct')->name('singleProduct');
+
+//=========================================Customer==========================================================
+
 Route::get('customerRegister','CustomerController@customerRegisterPage')->name('customerRegisterPage');
 Route::get('authenticateCustomer','CustomerController@authCustomer')->name('authCustomer');
 Route::get('registerCustomer','CustomerController@registerCustomer')->name('registerCustomer');
 Route::get('logoutCustomer','CustomerController@logout')->name('logoutCustomer');
-Route::get('singleProduct','templateController@singleProduct')->name('singleProduct');
-
+Route::post('rateProduct','CustomerController@rateProduct')->name('rateProduct');
