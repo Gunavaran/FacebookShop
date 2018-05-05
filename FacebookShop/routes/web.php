@@ -66,6 +66,9 @@ Route::get('dashboard/categories','ProductController@showCategories')->name('sho
 Route::post('dashboard/storeCategory','ProductController@storeCategory')->name('storeCategory');
 Route::post('dashboard/removeCategory','productController@removeCategory')->name('removeCategory');
 Route::post('dashboard/addProduct','ProductController@addProduct')->name("addNewProduct");
+Route::get('dashboard/viewProductDetails','ViewController@showProductsList')->name('showProductsDetails');
+Route::get('dashboard/singleProduct','ViewController@showSpecificProduct')->name('showSpecificProduct');
+Route::get('dashboard/removeProduct','ProductController@removeProduct')->name('removeProduct');
 
 //=================================================Messages and Notifications======================================================
 Route::get('dashboard/messages','ViewController@showMessages')->name('showMessages');
@@ -96,3 +99,25 @@ Route::get('/dashboard/specificShop','ViewController@showSpecificShop')->name('s
 
 Route::get('/dashboard/shopsList','ViewController@showShopList')->name('showShopsList');
 Route::get('/dashboard/specificVendor','ViewController@showSpecificVendor')->name('showSpecificVendor');
+
+//=============================================Templates===================================================
+
+Route::get('dashboard/titan-home','ViewController@showTemplateDemo')->name('showTemplateDemo');
+Route::get('dashboard/chooseTemplate','ViewController@chooseTemplate')->name('chooseTemplate');
+Route::get('dashboard/setTemplate','templateController@setTemplate')->name('setTemplate');
+Route::get('dashboard/designTemplate','templateController@designTemplate')->name('designTemplate');
+Route::post('dashboard/setSliderImage','templateController@setSliderImage')->name('setSliderImage');
+Route::post('dashboard/setSliderText','templateController@setSliderText')->name('setSliderText');
+Route::get('dashboard/designTemplateText','templateController@designTemplateText')->name('designTemplateText');
+Route::get('dashboard/Templates/removeSliderImage','templateController@removeSliderImage')->name('removeSliderImage');
+Route::post('dashboard/Templates/removeSliderText','templateController@removeSliderText')->name('removeSliderText');
+//---------------------------------------
+Route::get('searchProductCategory','templateController@searchProductCategory')->name('searchProductCategory');
+Route::get('showTemplateHome','viewController@showTemplateHome')->name('showTemplateHome');
+Route::get('customerLogIn','CustomerController@customerLogInPage')->name('customerLogInPage');
+Route::get('customerRegister','CustomerController@customerRegisterPage')->name('customerRegisterPage');
+Route::get('authenticateCustomer','CustomerController@authCustomer')->name('authCustomer');
+Route::get('registerCustomer','CustomerController@registerCustomer')->name('registerCustomer');
+Route::get('logoutCustomer','CustomerController@logout')->name('logoutCustomer');
+Route::get('singleProduct','templateController@singleProduct')->name('singleProduct');
+

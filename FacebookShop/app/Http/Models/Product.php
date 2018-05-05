@@ -10,19 +10,29 @@ namespace App\Http\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Input;
 
 class Product extends Model
 {
     protected $fillable = [
-       'product_name',
+        'product_name',
         'product_category',
         'description',
+        'size',
         'price',
         'currency_type',
         'items available',
+        'availability',
         'keywords',
-        'image'
+        'file_name',
+        'shop_id'
     ];
-    protected $table ="product";
+    protected $table = "product";
     protected $primaryKey = 'product_id';
+
+    public function getProductDetails($productId, $column)
+    {
+        $product = Product::where('product_id', $productId)->first();
+        echo $product->$column;
+    }
 }

@@ -76,7 +76,8 @@
                             </li>
                             {{--This tab deals with shop that will be created--}}
                             {{--For create shop option, a new button has to be put in the top menu bar--}}
-                            <li><a><i class="fa fa-shopping-basket"></i> Shop <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-shopping-basket"></i> Shop <span
+                                            class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="{{route('showCreateShopForm')}}">Create Shop</a></li>
                                     <li><a href="{{route('showShopDetails')}}">Shop Details</a></li>
@@ -87,7 +88,7 @@
                                 <ul class="nav child_menu">
                                     <li><a href="{{route('showCategories')}}">Categories</a></li>
                                     <li><a href="{{route('showNewProductForm')}}">Add Product</a></li>
-                                    <li><a href="#">Product Details</a></li>
+                                    <li><a href="{{route('showProductsDetails')}}">Product Details</a></li>
                                 </ul>
                             </li>
 
@@ -98,6 +99,32 @@
                                 <ul class="nav child_menu">
                                     <li><a href="{{route('showUsersList')}}">Users List</a></li>
                                     <li><a href="{{route('showShopsList')}}">Shops List</a></li>
+                                </ul>
+                            </li>
+                            <li><a><i class="fa fa-users"></i> Templates <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{route('chooseTemplate')}}">Choose Template</a></li>
+                                    <?php
+                                    use App\Http\Models\Shop;
+                                    use Illuminate\Support\Facades\Session;
+                                    if(Session::has('shopId')){
+                                        $shopId = Session::get('shopId');
+
+                                        $vendorShop = Shop::where('shop_id', $shopId)->first();
+
+                                        if($vendorShop->template != null){
+                                        ?>
+                                            <li><a href="{{route('designTemplate')}}">Design</a></li>
+                                             <li><a href="{{route('designTemplateText')}}">Design Text</a></li>
+
+                                <?php
+
+                                        }
+                                    }
+                                    ?>
+
+
+
                                 </ul>
                             </li>
 
@@ -156,34 +183,34 @@
                         </li>
 
                         {{--<li role="presentation" class="dropdown">--}}
-                            {{--<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"--}}
-                               {{--aria-expanded="false">--}}
-                                {{--<i class="fa fa-envelope-o"></i>--}}
-                                {{--<span class="badge bg-green">6</span>--}}
-                            {{--</a>--}}
-                            {{--<ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">--}}
+                        {{--<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"--}}
+                        {{--aria-expanded="false">--}}
+                        {{--<i class="fa fa-envelope-o"></i>--}}
+                        {{--<span class="badge bg-green">6</span>--}}
+                        {{--</a>--}}
+                        {{--<ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">--}}
 
-                                {{--<li>--}}
-                                    {{--<a>--}}
-                                        {{--<span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>--}}
-                                        {{--<span>--}}
-                          {{--<span>John Smith</span>--}}
-                          {{--<span class="time">3 mins ago</span>--}}
+                        {{--<li>--}}
+                        {{--<a>--}}
+                        {{--<span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>--}}
+                        {{--<span>--}}
+                        {{--<span>John Smith</span>--}}
+                        {{--<span class="time">3 mins ago</span>--}}
                         {{--</span>--}}
-                                        {{--<span class="message">--}}
-                          {{--Film festivals used to be do-or-die moments for movie makers. They were where...--}}
+                        {{--<span class="message">--}}
+                        {{--Film festivals used to be do-or-die moments for movie makers. They were where...--}}
                         {{--</span>--}}
-                                    {{--</a>--}}
-                                {{--</li>--}}
-                                {{--<li>--}}
-                                    {{--<div class="text-center">--}}
-                                        {{--<a>--}}
-                                            {{--<strong>See All Alerts</strong>--}}
-                                            {{--<i class="fa fa-angle-right"></i>--}}
-                                        {{--</a>--}}
-                                    {{--</div>--}}
-                                {{--</li>--}}
-                            {{--</ul>--}}
+                        {{--</a>--}}
+                        {{--</li>--}}
+                        {{--<li>--}}
+                        {{--<div class="text-center">--}}
+                        {{--<a>--}}
+                        {{--<strong>See All Alerts</strong>--}}
+                        {{--<i class="fa fa-angle-right"></i>--}}
+                        {{--</a>--}}
+                        {{--</div>--}}
+                        {{--</li>--}}
+                        {{--</ul>--}}
                         {{--</li>--}}
                     </ul>
                 </nav>
@@ -243,7 +270,8 @@
 <!-- iCheck -->
 <script type="text/javascript" src="{{ URL::asset('vendorsTemplate/iCheck/icheck.min.js') }}"></script>
 <!-- jQuery Tags Input -->
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/jquery.tagsinput/src/jquery.tagsinput.js') }}"></script>
+<script type="text/javascript"
+        src="{{ URL::asset('vendorsTemplate/jquery.tagsinput/src/jquery.tagsinput.js') }}"></script>
 
 <!-- Datatables -->
 <script type="text/javascript"
@@ -288,7 +316,8 @@
         aaData: response.data
     });
 </script>
-<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/bs-confirmation-master/bootstrap-confirmation.js') }}"></script>
+<script type="text/javascript"
+        src="{{ URL::asset('vendorsTemplate/bs-confirmation-master/bootstrap-confirmation.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('vendorsTemplate/popper.js/dist/popper.js') }}"></script>
 <script>
     $('[data-toggle=confirmation]').confirmation();

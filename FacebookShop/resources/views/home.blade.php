@@ -1,6 +1,4 @@
-{{--Backend for contact us is not implemented yet--}}
-{{--This is the page which is shown at first--}}
-{{--No need to log in to view this page--}}
+{{--This is the page which is shown first--}
 {{--Has the facility to contact the admin through Contact Us--}}
 
         <!doctype html>
@@ -15,7 +13,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Amazing landing Free html template</title>
+    <title> Facebook Shop</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -94,9 +92,9 @@
                                 <h1>FACEBOOK SHOP</h1>
                                 <p class="subtitle">start your dream business...</p>
 
-                                <div class="home_btn">
-                                    <a href="" class="btn btn-md">Learn More</a>
-                                </div>
+                                {{--<div class="home_btn">--}}
+                                    {{--<a href="" class="btn btn-md">Learn More</a>--}}
+                                {{--</div>--}}
 
                             </div>
                         </div>
@@ -105,9 +103,9 @@
                                 <h1>Have Your Own Shop</h1>
                                 <p class="subtitle">be your own boss...</p>
 
-                                <div class="home_btn">
-                                    <a href="" class="btn btn-md">Learn More</a>
-                                </div>
+                                {{--<div class="home_btn">--}}
+                                    {{--<a href="" class="btn btn-md">Learn More</a>--}}
+                                {{--</div>--}}
 
                             </div>
                         </div>
@@ -116,9 +114,20 @@
                                 <h1>Conquer Facebook</h1>
                                 <p class="subtitle">sell online...</p>
 
-                                <div class="home_btn">
-                                    <a href="" class="btn btn-md">Learn More</a>
-                                </div>
+                                {{--<div class="home_btn">--}}
+                                    {{--<a href="" class="btn btn-md">Learn More</a>--}}
+                                {{--</div>--}}
+
+                            </div>
+                        </div>
+                        <div class="single_home_slider">
+                            <div class="main_home wow fadeInUp" data-wow-duration="700ms">
+                                <h1>Have Your Own Website</h1>
+                                <p class="subtitle">shop or service</p>
+
+                                {{--<div class="home_btn">--}}
+                                {{--<a href="" class="btn btn-md">Learn More</a>--}}
+                                {{--</div>--}}
 
                             </div>
                         </div>

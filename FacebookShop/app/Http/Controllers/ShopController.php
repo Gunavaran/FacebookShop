@@ -50,6 +50,9 @@ class ShopController extends Controller
         $shop -> username = Session::get('username');
         $shop->save();
 
+        $shopId = Shop::where('username',Session::get('username'))->value('shop_id');
+        Session::put('shopId',$shopId);
+
         Session::flash('success', 'Shop is Created Successfully'); //to send success message
         return redirect() -> route('dashboard');
     }

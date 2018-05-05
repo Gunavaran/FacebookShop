@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-
+use App\Http\Models\Shop;
 
 class AuthController extends Controller
 {
@@ -38,8 +38,8 @@ class AuthController extends Controller
         $vendor -> username = $request['username'];
         $vendor -> password = bcrypt($request['password']);
         $vendor -> save();
-
-        return view('layout.dashboard');
+        Session::put('username',$request->username);
+        return view('layout.adminDashboard');
 
     }
 
@@ -65,11 +65,18 @@ class AuthController extends Controller
             //admin log in
             Session::put('username',DB::table('vendor')-> where('email',$request['email']) -> value('username'));
             Session::put('admin','true');
+            $shop = Shop::where('username',DB::table('vendor')-> where('email',$request['email']) -> value('username') )->first();
+            if($shop != null){
+                Session::put('shopId',$shop->shop_id);
+            }
             return view('layout.adminDashboard');
         } else{
             //vendor log in
             Session::put('username',DB::table('vendor')-> where('email',$request['email']) -> value('username'));
-            Session::put('admin','false');
+            $shop = Shop::where('username',DB::table('vendor')-> where('email',$request['email']) -> value('username') )->first();
+            if($shop != null){
+                Session::put('shopId',$shop->shop_id);
+            }
             return view('layout.adminDashboard');
         }
 
