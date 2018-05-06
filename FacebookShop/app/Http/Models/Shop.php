@@ -32,4 +32,23 @@ class Shop extends Model{
         $shopId = $shop->shop_id;
         return $shopId;
     }
+
+    public function getCustomerCount($shopId){
+        $count = Customer::where('shop_id', $shopId)->count();
+        return $count;
+    }
+
+    public function checkShopExist($username){
+        $shop = Shop::where('username', $username)->first();
+        if($shop == null){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    public function getShopDetails($username,$detail){
+        $infor = Shop::where('username',$username)->value($detail);
+        return $infor;
+    }
 }

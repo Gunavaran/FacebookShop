@@ -32,7 +32,8 @@
                         <tbody>
                         <?php
                         use App\Http\Models\Message;
-                        $messages = Message::where('status', '0')->get();
+                        $messageNew = new Message();
+                        $messages = $messageNew->getUnreadMessages();
                         ?>
                         @foreach( $messages as $message)
 
@@ -85,7 +86,7 @@
 
                         <tbody>
                         <?php
-                        $messages = Message::where('status', '1')->get();
+                        $messages = $messageNew->getReadMessages();
                         ?>
                         @foreach( $messages as $message)
 

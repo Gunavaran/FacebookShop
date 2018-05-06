@@ -16,7 +16,7 @@ class ViewController
 {
     public function showDashboard()
     {
-        return view('layout.adminDashboard');
+        return view('dashboard');
 //        if(Session::has('username')){
 //            if (DB::table('vendor')-> where('username',Session::get('username'))->value('admin')){
 //                //admin dashboard

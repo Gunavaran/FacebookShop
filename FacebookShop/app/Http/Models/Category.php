@@ -20,6 +20,11 @@ class Category extends  Model
     ];
     protected $table ="category";
     protected $primaryKey = 'category_id';
-    public $timestamps = false;
+
+
+    public function getCategories($shopId){
+        $categories = Category::where('shop_id', $shopId)->orderBy('category_name', 'asc')->get();
+        return $categories;
+    }
 
 }

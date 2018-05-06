@@ -24,4 +24,14 @@ class Message extends Model
     ];
     protected $table ="message";
     protected $primaryKey = 'message_id';
+
+    public function getReadMessages(){
+        $messages = Message::where('status', '1')->get();
+        return $messages;
+    }
+
+    public function getUnreadMessages(){
+        $messages = Message::where('status', '0')->get();
+        return $messages;
+    }
 }

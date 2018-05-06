@@ -40,11 +40,14 @@
                                 {{Session::get("success")}}
                             </div>
                         @endif
+                        @php
+                        $shop = new \App\Http\Models\Shop();
+                        @endphp
                         <div class="form-group">
                             <label for="shop_id" class="control-label col-md-3 col-sm-3 col-xs-12"> Shop ID * </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="shop_id" class="form-control col-md-7 col-xs-12" type="text" name="shop_id"
-                                       value="{{DB::table('shop') -> where('username',$username) -> value('shop_id')}}">
+                                       value="{{$shop->getShopDetails($username,'shop_id')}}">
                             </div>
                         </div>
 
@@ -54,7 +57,7 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="shop_name" class="form-control col-md-7 col-xs-12" type="text"
                                        name="shop_name"
-                                       value="{{DB::table('shop') -> where('username',$username) -> value('shop_name')}}">
+                                       value="{{$shop->getShopDetails($username,'shop_name')}}">
                             </div>
                         </div>
 
@@ -62,7 +65,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Description *</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <textarea class="resizable_textarea form-control"
-                                          name="description"> {{DB::table('shop') -> where('username',$username) -> value('description')}}</textarea>
+                                          name="description"> {{$shop->getShopDetails($username,'description')}}</textarea>
                             </div>
                         </div>
 
@@ -72,14 +75,14 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="contact_no" class="form-control col-md-7 col-xs-12" type="text"
                                        name="contact_no"
-                                       value="{{DB::table('shop') -> where('username',$username) -> value('contact_no')}}">
+                                       value="{{$shop->getShopDetails($username,'contact_no')}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="email" class="control-label col-md-3 col-sm-3 col-xs-12"> E-mail * </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="email" class="form-control col-md-7 col-xs-12" type="text" name="email"
-                                       value="{{DB::table('shop') -> where('username',$username) -> value('email')}}">
+                                       value="{{$shop->getShopDetails($username,'email')}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -87,35 +90,35 @@
                                 No. </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="resid-no" class="form-control col-md-7 col-xs-12" type="text" name="resid-no"
-                                       value="{{DB::table('shop') -> where('username',$username) -> value('resident_no')}}">
+                                       value="{{$shop->getShopDetails($username,'resident_no')}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="street" class="control-label col-md-3 col-sm-3 col-xs-12"> Street </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="street" class="form-control col-md-7 col-xs-12" type="text" name="street"
-                                       value="{{DB::table('shop') -> where('username',$username) -> value('street')}}">
+                                       value="{{$shop->getShopDetails($username,'street')}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="city" class="control-label col-md-3 col-sm-3 col-xs-12"> City </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="city" class="form-control col-md-7 col-xs-12" type="text" name="city"
-                                       value="{{DB::table('shop') -> where('username',$username) -> value('city')}}">
+                                       value="{{$shop->getShopDetails($username,'city')}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="country" class="control-label col-md-3 col-sm-3 col-xs-12"> Country </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="country" class="form-control col-md-7 col-xs-12" type="text" name="country"
-                                       value="{{DB::table('shop') -> where('username',$username) -> value('country')}}">
+                                       value="{{$shop->getShopDetails($username,'country')}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="zip-code" class="control-label col-md-3 col-sm-3 col-xs-12"> Zip Code </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="zip-code" class="form-control col-md-7 col-xs-12" type="text" name="zip-code"
-                                       value="{{DB::table('shop') -> where('username',$username) -> value('zip_code')}}">
+                                       value="{{$shop->getShopDetails($username,'zip_code')}}">
                             </div>
                         </div>
 

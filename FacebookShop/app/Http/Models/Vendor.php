@@ -31,4 +31,9 @@ class Vendor extends Model
     ];
     protected $table ="vendor";
     protected $primaryKey = 'vendor_id';
+
+    public function getVendorDetails($username,$detail){
+        $infor = Vendor::where('username',$username)->value($detail);
+        return $infor;
+    }
 }

@@ -35,4 +35,9 @@ class Product extends Model
         $product = Product::where('product_id', $productId)->first();
         echo $product->$column;
     }
+
+    public function getProducts($shopId){
+        $products = Product::where('shop_id',$shopId)->get();
+        return $products;
+    }
 }

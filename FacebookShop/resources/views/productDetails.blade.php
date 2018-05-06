@@ -42,7 +42,9 @@
 
                         $shop = new Shop();
                         $shopId = $shop->getShopId();
-                        $products = Product::where('shop_id',$shopId)->get();
+
+                        $product = new Product();
+                        $products = $product->getProducts($shopId);
                         ?>
                         @foreach( $products as $product)
                             <tr>

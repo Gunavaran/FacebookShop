@@ -39,7 +39,7 @@ class AuthController extends Controller
         $vendor -> password = bcrypt($request['password']);
         $vendor -> save();
         Session::put('username',$request->username);
-        return view('layout.adminDashboard');
+        return view('dashboard');
 
     }
 
@@ -69,7 +69,7 @@ class AuthController extends Controller
             if($shop != null){
                 Session::put('shopId',$shop->shop_id);
             }
-            return view('layout.adminDashboard');
+            return view('dashboard');
         } else{
             //vendor log in
             Session::put('username',DB::table('vendor')-> where('email',$request['email']) -> value('username'));
@@ -77,7 +77,7 @@ class AuthController extends Controller
             if($shop != null){
                 Session::put('shopId',$shop->shop_id);
             }
-            return view('layout.adminDashboard');
+            return view('dashboard');
         }
 
     }

@@ -26,10 +26,12 @@
                             <div class="col-md-6">
                                 <div class="carousel-item-prev">
                                     <div class="image view view-first">
-                                        <img style="width: 100%; display: block;" src="{{URL::asset('images/titan.jpg')}}" alt="image"/>
+                                        <img style="width: 100%; display: block;"
+                                             src="{{URL::asset('images/titan.jpg')}}" alt="image"/>
                                         <div class="mask">
                                             <div class="tools tools-bottom">
-                                                <a href="{{route('showTemplateDemo',['templateName'=>'titan'])}}" target="_blank">
+                                                <a href="{{route('showTemplateDemo',['templateName'=>'titan'])}}"
+                                                   target="_blank">
                                                     <button type="button" class="btn btn-dark">Demo</button>
                                                 </a>
                                                 <a href="{{route('setTemplate',['templateName'=>'titan'])}}">

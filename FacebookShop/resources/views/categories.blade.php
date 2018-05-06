@@ -82,8 +82,9 @@
                     use Illuminate\Support\Facades\Session;
 
                     $shop = Shop::where('username', Session::get('username'))->first();
+                    $category = new Category();
+                    $categories = $category->getCategories($shop->shop_id);
 
-                    $categories = Category::where('shop_id', $shop->shop_id)->orderBy('category_name', 'asc')->get();
                     foreach($categories as $category){
                     ?>
 

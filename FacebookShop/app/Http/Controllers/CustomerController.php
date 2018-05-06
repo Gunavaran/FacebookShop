@@ -61,7 +61,7 @@ class CustomerController extends Controller
         ]);
 
         $customer = new Customer();
-
+        $customer->shop_id = $request->shop_id;
         $customer->first_name = $request->first_name;
         $customer->last_name = $request->last_name;
         $customer->email = $request->email;
