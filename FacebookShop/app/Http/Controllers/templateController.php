@@ -125,12 +125,12 @@ class templateController
         Session::put('productCategory', $productCategory);
         Session::put('sorting', $productSort);
         return redirect()->route('showTemplateHome');
-
     }
 
     public function singleProduct(){
         return view('templates.titan.singleProduct');
     }
+
 
 
 }

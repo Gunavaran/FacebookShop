@@ -87,6 +87,7 @@
                             <li><a style="font-size: medium" href="{{route('logoutCustomer')}}">Log Out</a></li>
                         </ul>
                     </li>
+                    <li class="dropdown"><a style="font-size: medium" href="{{route('checkoutPage')}}">Checkout</a></li>
                     <?php
                     }
                     ?>
@@ -200,6 +201,7 @@ JavaScripts
             $('#successMessage').modal('show');
         });
     </script>
+    {{Session::forget('ratingSuccess')}}
 @endif
 @if(Session::has('ratingFailure'))
     <script type='text/javascript'>
@@ -207,4 +209,23 @@ JavaScripts
             $('#failureMessage').modal('show');
         });
     </script>
+    {{Session::forget('ratingFailure')}}
+@endif
+
+@if(Session::has('checkoutSuccess'))
+    <script type='text/javascript'>
+        $(window).on('load',function () {
+            $('#checkoutSuccess').modal('show');
+        });
+    </script>
+    {{Session::forget('checkoutSuccess')}}
+@endif
+
+@if(Session::has('checkoutFailure'))
+    <script type='text/javascript'>
+        $(window).on('load',function () {
+            $('#checkoutFailure').modal('show');
+        });
+    </script>
+    {{Session::forget('checkoutFailure')}}
 @endif

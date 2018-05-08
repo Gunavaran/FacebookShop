@@ -51,14 +51,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-20">
-                        <div class="col-sm-4 mb-sm-20">
-                            <input class="form-control input-lg" type="number" name="" value="1" max="40" min="1"
-                                   required="required"/>
+                    <form method="POST" action="{{route('addToCart',['productId'=>$product->product_id,'shopId'=>$shopId,'customerEmail'=>Session::get('customer')])}}">
+                        {{csrf_field()}}
+                        <div class="row mb-20">
+                            <div class="col-sm-4 mb-sm-20">
+                                <input class="form-control input-lg" type="number" name="quantity" value="1" max="40" min="1" required/>
+                            </div>
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-lg btn-block btn-round btn-b">Add To Cart</button>
+                            </div>
                         </div>
-                        <div class="col-sm-8"><a class="btn btn-lg btn-block btn-round btn-b" href="#">Add To Cart</a>
-                        </div>
-                    </div>
+                    </form>
+
                     <div class="row mb-20">
                         <div class="col-sm-12">
                             <div class="product_meta">Categories:<a href="#"> Man, </a><a href="#">Clothing, </a><a
@@ -235,6 +239,40 @@
                 </div>
                 <div class="modal-body text-center">
                     <p class="lead">You can rate a product only once.</p>
+                    {{--<a  class="rd_more btn btn-default">OK</a>--}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade success-popup" id="checkoutFailure" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Sorry!!!</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="lead">The product already exists in shopping cart</p>
+                    {{--<a  class="rd_more btn btn-default">OK</a>--}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade success-popup" id="checkoutSuccess" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Success!!!</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="lead">Products are added successfully.</p>
                     {{--<a  class="rd_more btn btn-default">OK</a>--}}
                 </div>
 

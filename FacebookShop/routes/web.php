@@ -124,3 +124,7 @@ Route::get('authenticateCustomer','CustomerController@authCustomer')->name('auth
 Route::get('registerCustomer','CustomerController@registerCustomer')->name('registerCustomer');
 Route::get('logoutCustomer','CustomerController@logout')->name('logoutCustomer');
 Route::post('rateProduct','CustomerController@rateProduct')->name('rateProduct');
+
+//=========================================Checkout=============================================================
+Route::get('checkoutPage','CheckoutController@showCheckout')->name('checkoutPage');
+Route::post('addToCart','CheckoutController@addToCart')->name('addToCart');
