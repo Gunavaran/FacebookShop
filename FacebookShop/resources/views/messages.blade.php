@@ -32,8 +32,9 @@
                         <tbody>
                         <?php
                         use App\Http\Models\Message;
+                        use Illuminate\Support\Facades\Input;
                         $messageNew = new Message();
-                        $messages = $messageNew->getUnreadMessages();
+                        $messages = $messageNew->getUnreadMessages(Input::get('shopId'));
                         ?>
                         @foreach( $messages as $message)
 
@@ -44,7 +45,7 @@
                                 <td>{{$message->message}}</td>
                                 <td>{{$message->created_at}}</td>
                                 <td><a href="{{route('markAsRead',[
-                                'messageId'=>$message->message_id
+                                'messageId'=>$message->message_id,'shopId'=>Input::get('shopId')
                                 ])}}">
                                         <button type="button" class="btn btn-link">Mark As Read</button>
                                     </a>
@@ -86,7 +87,7 @@
 
                         <tbody>
                         <?php
-                        $messages = $messageNew->getReadMessages();
+                        $messages = $messageNew->getReadMessages(Input::get('shopId'));
                         ?>
                         @foreach( $messages as $message)
 
@@ -97,7 +98,7 @@
                                 <td>{{$message->message}}</td>
                                 <td>{{$message->created_at}}</td>
                                 <td><a href="{{route('markAsUnread',[
-                                'messageId'=>$message->message_id
+                                'messageId'=>$message->message_id,'shopId'=>Input::get('shopId')
                                 ])}}">
                                         <button type="button" class="btn btn-link">Mark As Unread</button>
                                     </a>

@@ -131,6 +131,10 @@ class templateController
         return view('templates.titan.singleProduct');
     }
 
+    public function accountSettings(){
+        return view('templates.titan.accountSettings');
+    }
+
 
 
 }

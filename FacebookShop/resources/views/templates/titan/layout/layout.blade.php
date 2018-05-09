@@ -59,31 +59,38 @@
                 use App\Http\Models\Shop;
                 use Illuminate\Support\Facades\Session;
                 use App\Http\Models\Customer;
-                $shopId = Session::get('shopId');
+                $shopId = Session::get('siteShopId');
                 echo route('showTemplateHome');
 
                 ?>">
 
                     <?php
+                    $shop = new Shop();
+                    $shopName = $shop->getShopDetailsViaId($shopId, 'shop_name');
 
-                    echo Shop::where('shop_id', $shopId)->value('shop_name');
+                    echo $shopName;
                     ?></a>
             </div>
             <div class="collapse navbar-collapse" id="custom-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown"><a style="font-size: medium" href="{{route('showTemplateHome')}}">Home</a></li>
                     <?php
-                    if (!Session::has('customer')) {
+                    if (!Session::has('customerId')) {
                     ?>
-                    <li class="dropdown"><a style="font-size: medium" href="{{route('customerLogInPage')}}">Log In</a></li>
-                    <li class="dropdown"><a style="font-size: medium" href="{{route('customerRegisterPage')}}">Sign UP</a></li>
+                    <li class="dropdown"><a style="font-size: medium" href="{{route('customerLogInPage')}}">Log In</a>
+                    </li>
+                    <li class="dropdown"><a style="font-size: medium" href="{{route('customerRegisterPage')}}">Sign
+                            UP</a></li>
 
                     <?php
                     } else{
+                    $customer = new Customer();
+                    $customerName = $customer->getCustomerDetails(Session::get('customerId'), 'first_name');
                     ?>
-                    <li class="dropdown"><a class="dropdown-toggle" href="#" style="font-size: medium" data-toggle="dropdown">{{DB::table('customer')->where('email',Session::get('customer'))->value('first_name')}}</a>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" style="font-size: medium"
+                                            data-toggle="dropdown">{{$customerName}}</a>
                         <ul class="dropdown-menu">
-                            <li><a style="font-size: medium" href="service1.html">Account Settings</a></li>
+                            <li><a style="font-size: medium" href="{{route('accountSettings')}}">Account Settings</a></li>
                             <li><a style="font-size: medium" href="{{route('logoutCustomer')}}">Log Out</a></li>
                         </ul>
                     </li>
@@ -97,63 +104,54 @@
         </div>
     </nav>
     @yield('content')
-    <div class="module-small bg-dark">
+    <div class="module-small bg-dark" style="margin-top: -5%">
         <div class="container">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-6">
                     <div class="widget">
-                        <h5 class="widget-title font-alt">About Titan</h5>
-                        <p>The languages only differ in their grammar, their pronunciation and their most common
-                            words.</p>
-                        <p>Phone: +1 234 567 89 10</p>Fax: +1 234 567 89 10
-                        <p>Email:<a href="#">somecompany@example.com</a></p>
+                        <h5 class="widget-title"><b style="font-size:large">Get In Touch</b></h5>
+                        <p style="font-family: 'Karla', sans-serif; font-size: medium">Tel No :
+                            {{$shop->getShopDetailsViaId($shopId,'contact_no')}}&nbsp; </p>
+                        <p style="font-family: 'Karla', sans-serif; font-size: medium">Email :
+                            &nbsp;{{$shop->getShopDetailsViaId($shopId,'email')}} </p>
+                        <p style="font-family: 'Karla', sans-serif; font-size: medium">Address :
+                            {{$shop->getShopDetailsViaId($shopId,'resident_no').', '.$shop->getShopDetailsViaId($shopId,'street').', '.$shop->getShopDetailsViaId($shopId,'city').', '.$shop->getShopDetailsViaId($shopId,'country')}}
+                            &nbsp; </p>
+
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-6">
                     <div class="widget">
-                        <h5 class="widget-title font-alt">Recent Comments</h5>
-                        <ul class="icon-list">
-                            <li>Maria on <a href="#">Designer Desk Essentials</a></li>
-                            <li>John on <a href="#">Realistic Business Card Mockup</a></li>
-                            <li>Andy on <a href="#">Eco bag Mockup</a></li>
-                            <li>Jack on <a href="#">Bottle Mockup</a></li>
-                            <li>Mark on <a href="#">Our trip to the Alps</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="widget">
-                        <h5 class="widget-title font-alt">Blog Categories</h5>
-                        <ul class="icon-list">
-                            <li><a href="#">Photography - 7</a></li>
-                            <li><a href="#">Web Design - 3</a></li>
-                            <li><a href="#">Illustration - 12</a></li>
-                            <li><a href="#">Marketing - 1</a></li>
-                            <li><a href="#">Wordpress - 16</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="widget">
-                        <h5 class="widget-title font-alt">Popular Posts</h5>
-                        <ul class="widget-posts">
-                            <li class="clearfix">
-                                <div class="widget-posts-image"><a href="#"><img src="assets/images/rp-1.jpg"
-                                                                                 alt="Post Thumbnail"/></a></div>
-                                <div class="widget-posts-body">
-                                    <div class="widget-posts-title"><a href="#">Designer Desk Essentials</a></div>
-                                    <div class="widget-posts-meta">23 january</div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <div class="widget-posts-image"><a href="#"><img src="assets/images/rp-2.jpg"
-                                                                                 alt="Post Thumbnail"/></a></div>
-                                <div class="widget-posts-body">
-                                    <div class="widget-posts-title"><a href="#">Realistic Business Card Mockup</a></div>
-                                    <div class="widget-posts-meta">15 February</div>
-                                </div>
-                            </li>
-                        </ul>
+                        <h3 class="widget-title"><b style="font-size:large">Contact Us </b></h3>
+                        <form method="post" action="{{route('storeShopMessage')}}">
+                            {{csrf_field()}}
+                            @if(count($errors) > 0)
+                                @foreach($errors->all() as $error)
+                                    <p class="alert alert-danger"> {{$error}}</p>
+                                @endforeach
+                            @endif
+                            <div class="form-group">
+                                <label class="sr-only" for="name">Name</label>
+                                <input style="text-transform: none;font-size: medium" class="form-control" id="name" name="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name."/>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="email">Email</label>
+                                <input style="text-transform: none;font-size: medium" class="form-control" id="email" name="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email address."/>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="form-group">
+                                <textarea style="text-transform: none;font-size: medium" class="form-control" rows="7" id="message" name="message" placeholder="Your Message" required="required" data-validation-required-message="Please enter your message."></textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <input style="text-transform: none;font-size: medium" class="form-control" type="hidden" id="shop_id" value="{{$shopId}}" name="shop_id"/>
+                            <div class="text-center">
+                                <button class="btn btn-primary btn-round" type="submit">Submit</button>
+                            </div>
+                        </form>
+
+                        {{--<p style="font-family: 'Karla', sans-serif; font-size: medium">Photography</p>--}}
+                        {{--<p style="font-family: 'Karla', sans-serif; font-size: medium">Videography</p>--}}
                     </div>
                 </div>
             </div>
@@ -164,8 +162,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <p style="text-align:center; font-family: 'Karla', sans-serif; font-size: large">&copy; 2018&nbsp;Apptimus
-                        Têch, All
+                    <p style="text-align:center; font-family: 'Karla', sans-serif; font-size: large">&copy; 2018&nbsp;Futura
+                        Labs, All
                         Rights Reserved</p>
                 </div>
 
@@ -197,7 +195,7 @@ JavaScripts
 <script type="text/javascript" src="{{ URL::asset('titan/js/main.js') }}"></script>
 @if(Session::has('ratingSuccess'))
     <script type='text/javascript'>
-        $(window).on('load',function () {
+        $(window).on('load', function () {
             $('#successMessage').modal('show');
         });
     </script>
@@ -205,7 +203,7 @@ JavaScripts
 @endif
 @if(Session::has('ratingFailure'))
     <script type='text/javascript'>
-        $(window).on('load',function () {
+        $(window).on('load', function () {
             $('#failureMessage').modal('show');
         });
     </script>
@@ -214,7 +212,7 @@ JavaScripts
 
 @if(Session::has('checkoutSuccess'))
     <script type='text/javascript'>
-        $(window).on('load',function () {
+        $(window).on('load', function () {
             $('#checkoutSuccess').modal('show');
         });
     </script>
@@ -223,9 +221,9 @@ JavaScripts
 
 @if(Session::has('checkoutFailure'))
     <script type='text/javascript'>
-        $(window).on('load',function () {
+        $(window).on('load', function () {
             $('#checkoutFailure').modal('show');
         });
     </script>
-    {{Session::forget('checkoutFailure')}}
+{{Session::forget('checkoutFailure')}}
 @endif

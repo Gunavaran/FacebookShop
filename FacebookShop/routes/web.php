@@ -40,7 +40,7 @@ Route::get('/', 'ViewController@showHome')-> name('home');
 Route::get('dashboard', 'ViewController@showDashboard') -> name('dashboard');
 
 //route to the contact us form on home page which will store user message to message table
-Route::post('/FormController/Message','FormController@saveMessageData') -> name('contactUsForm');
+Route::post('/Message','FormController@saveMessageData') -> name('contactUsForm');
 
 
 //====================================================Shop==================================================
@@ -59,6 +59,9 @@ Route::get('/dashboard/shopDetails','ShopController@showShopDetails') -> name('s
 
 //to display and update shop details
 Route::post('/dashboard/updateShopDetails', 'ShopController@updateShopData') -> name('updateShopDetails');
+Route::get('dashboard/viewMyShop','ShopController@viewMyShop')->name('viewMyShop');
+Route::post('storeShopMessage','FormController@storeShopMessage')->name('storeShopMessage');
+
 //=================================================Product======================================================
 
 Route::get('dashboard/newProduct','ProductController@showNewProductForm')-> name('showNewProductForm');
@@ -75,7 +78,6 @@ Route::get('dashboard/messages','ViewController@showMessages')->name('showMessag
 
 Route::get('dashboard/readMessage','FormController@markAsRead')->name('markAsRead');
 Route::get('dashboard/unreadMessage','FormController@markAsUnread')->name('markAsUnread');
-
 
 //=================================================User======================================================
 //route to My Details tab where you can look up your details and also can update them
@@ -113,9 +115,11 @@ Route::get('dashboard/Templates/removeSliderImage','templateController@removeSli
 Route::post('dashboard/Templates/removeSliderText','templateController@removeSliderText')->name('removeSliderText');
 //---------------------------------------
 Route::get('searchProductCategory','templateController@searchProductCategory')->name('searchProductCategory');
-Route::get('showTemplateHome','viewController@showTemplateHome')->name('showTemplateHome');
+Route::get('showTemplateHome','ViewController@showTemplateHome')->name('showTemplateHome');
 Route::get('customerLogIn','CustomerController@customerLogInPage')->name('customerLogInPage');
 Route::get('singleProduct','templateController@singleProduct')->name('singleProduct');
+Route::get('accountSettings','templateController@accountSettings')->name('accountSettings');
+Route::get('updateAccountDetails','CustomerController@updateAccountDetails')->name('updateAccountDetails');
 
 //=========================================Customer==========================================================
 
@@ -128,3 +132,4 @@ Route::post('rateProduct','CustomerController@rateProduct')->name('rateProduct')
 //=========================================Checkout=============================================================
 Route::get('checkoutPage','CheckoutController@showCheckout')->name('checkoutPage');
 Route::post('addToCart','CheckoutController@addToCart')->name('addToCart');
+Route::get('removeFromCheckout','CheckoutController@removeProduct')->name('removeFromCheckout');

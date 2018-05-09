@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Models\Shop;
+use App\Http\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -88,6 +89,16 @@ class ShopController extends Controller
 
         Session::flash('success', 'Details are Changed Successfully');
         return redirect() -> route('showShopDetails');
+    }
+
+    public function viewMyShop(){
+        $shop = new Shop();
+        $shopTemplate = $shop->getShopDetails(Session::get('username'),'template');
+        Session::put('template',$shopTemplate);
+        if ($shopTemplate == 'titan') {
+            Session::put('siteShopId',Session::get('shopId'));
+            return view('templates.titan.home');
+        }
     }
 
 }

@@ -2,8 +2,14 @@
 @section('content')
     <?php
     use App\Http\Models\Checkout;
+    use App\Http\Models\Product;
+    use Illuminate\Support\Facades\Session;
 
-
+    $customerId = Session::get('customerId');
+    $newCheckout = new Checkout();
+    $checkouts = $newCheckout->getCheckoutDetails($customerId);
+    $product = new Product();
+    $shopId = Session::get('siteShopId');
 
     ?>
     <section class="module">
@@ -26,48 +32,59 @@
                             <th>Total</th>
                             <th>Remove</th>
                         </tr>
+                        <?php
+                        foreach($checkouts as $checkout){
+                            $productId = $checkout->product_id;
+                                $image = $product->getProductDetails($productId,'file_name');
 
+                        ?>
                         <tr>
-                            <td class="hidden-xs"><a href="#"><img src="assets/images/shop/product-14.jpg"/></a></td>
+                            <td class="hidden-xs"><img height=100 width=100 src="{{URL::asset('storage/'.$shopId.'/thumbnails/'.$image)}}"/></td>
                             <td>
-                                <h5 style="font-size: large" class="product-title font-alt">Accessories Pack</h5>
+                                <h5 style="font-size: large" class="product-title font-alt">{{$product->getProductDetails($productId,'product_name')}}</h5>
                             </td>
                             <td class="hidden-xs">
-                                <h5 style="font-size: large" class="product-title font-alt">£20.00</h5>
+                                <h5 style="font-size: large" class="product-title font-alt">{{$product->getProductDetails($productId,'currency_type').' '.$product->getProductDetails($productId,'price')}}</h5>
                             </td>
                             <td>
-                                <h5 style="font-size: large" class="product-title font-alt">£20.00</h5>
+                                <h5 style="font-size: large" class="product-title font-alt">{{$checkout->quantity}}</h5>
                             </td>
                             <td>
-                                <h5 style="font-size: large" class="product-title font-alt">£20.00</h5>
+                                <h5 style="font-size: large" class="product-title font-alt">{{$product->getProductDetails($productId,'currency_type').' '.$checkout->quantity * $product->getProductDetails($productId,'price')}}</h5>
                             </td>
                             <td class="pr-remove">
-                                <button class="btn btn-b btn-round" href="#" style="font-size: medium">Remove</button>
+                                <button class="btn btn-primary btn-round btn-xs" href="{{route('removeFromCheckout',['customerId'=>$customerId,'productId'=>$productId])}}" style="font-size: medium">Remove</button>
                             </td>
 
                         </tr>
+                        <?php
+                        }
+                        ?>
+
 
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <input class="form-control" type="text" id="" name="" placeholder="Coupon code"/>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <button class="btn btn-round btn-g" type="submit">Apply</button>
-                    </div>
-                </div>
-                <div class="col-sm-3 col-sm-offset-3">
-                    <div class="form-group">
-                        <button class="btn btn-block btn-round btn-d pull-right" type="submit">Update Cart</button>
-                    </div>
-                </div>
-            </div>
+
+            {{--*********to add coupan code***********************--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-sm-3">--}}
+                    {{--<div class="form-group">--}}
+                        {{--<input class="form-control" type="text" id="" name="" placeholder="Coupon code"/>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-sm-3">--}}
+                    {{--<div class="form-group">--}}
+                        {{--<button class="btn btn-round btn-g" type="submit">Apply</button>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-sm-3 col-sm-offset-3">--}}
+                    {{--<div class="form-group">--}}
+                        {{--<button class="btn btn-block btn-round btn-d pull-right" type="submit">Update Cart</button>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <hr class="divider-w">
             <div class="row mt-70">
                 <div class="col-sm-5 col-sm-offset-7">

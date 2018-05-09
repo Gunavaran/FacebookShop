@@ -51,4 +51,9 @@ class Shop extends Model{
         $infor = Shop::where('username',$username)->value($detail);
         return $infor;
     }
+
+    public function getShopDetailsViaId($shopId,$detail){
+        $infor = Shop::where('shop_id',$shopId)->value($detail);
+        return $infor;
+    }
 }

@@ -51,4 +51,15 @@ class Feedback extends Model
 
         return $this->getAttribute($keyName);
     }
+
+    public function getFeedback($productId){
+        $feedbacks = Feedback::where('product_id', $productId)->get();
+        return $feedbacks;
+    }
+
+    public function getFeedbackCount($productId){
+        $count = Feedback::where('product_id',$productId)->count();
+        return $count;
+    }
+
 }

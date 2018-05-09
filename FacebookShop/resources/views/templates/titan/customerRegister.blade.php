@@ -8,7 +8,7 @@
                     <hr class="divider-w mb-10">
                     <?php
                     use Illuminate\Support\Facades\Session;
-                    $shopId = Session::get('shopId');
+                    $shopId = Session::get('siteShopId');
                         ?>
                     <form class="form" action="{{route('registerCustomer')}}">
                         {{csrf_field()}}

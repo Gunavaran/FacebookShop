@@ -14,4 +14,14 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         //
     ];
+    protected function shouldPassThrough($request)
+    {
+        foreach ($this->except as $except) {
+            if ($request->is($except) || str_contains($request->url(), $except)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

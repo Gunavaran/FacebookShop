@@ -21,6 +21,7 @@
                         <thead>
                         <tr>
                             <th>Product ID</th>
+                            <th>Image</th>
                             <th>Product Name</th>
                             <th>Category</th>
                             <th>Size</th>
@@ -49,6 +50,7 @@
                         @foreach( $products as $product)
                             <tr>
                                 <td>{{$product->product_id}}</td>
+                                <td><img height=100 width=100 src="{{URL::asset('storage/'.$shopId.'/thumbnails/'.$product->file_name)}}"></td>
                                 <td>{{$product->product_name}}</td>
                                 <td>{{$product->product_category}}</td>
                                 <td>{{$product->size}}</td>
@@ -64,8 +66,9 @@
 
                                 </td>
 
-                                <td><a data-toggle="confirmation" href="{{route('removeProduct',['productId'=> $product->product_id])}}">
-                                        <button class="btn btn-danger" type="button" >
+                                <td><a data-toggle="confirmation"
+                                       href="{{route('removeProduct',['productId'=> $product->product_id])}}">
+                                        <button class="btn btn-danger" type="button">
                                             Remove
                                         </button>
                                     </a>

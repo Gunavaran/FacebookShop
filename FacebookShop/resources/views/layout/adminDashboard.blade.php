@@ -64,8 +64,20 @@
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section">
-                        <h3>General</h3>
                         <ul class="nav side-menu">
+                            <?php
+                            use App\Http\Models\Shop;
+                            use Illuminate\Support\Facades\Session;
+                            if(Session::has('shopId')){
+                            ?>
+                            <li><a href="{{route('viewMyShop')}} " target="_blank"><i class="fa fa-shopping-cart"></i>View
+                                    My Shop</a>
+                            </li>
+                            <?php
+                            }
+                            ?>
+
+
 
                             {{--this tab deals with details of the vendor who is the user here--}}
                             <li><a><i class="fa fa-user"></i> Account <span class="fa fa-chevron-down"></span></a>
@@ -92,7 +104,7 @@
                                 </ul>
                             </li>
 
-                            <li><a href="{{route('showMessages')}}"><i class="fa fa-envelope"></i>Notifications</a>
+                            <li><a href="{{route('showMessages',['shopId',null])}}"><i class="fa fa-envelope"></i>Notifications</a>
                             </li>
 
                             <li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
@@ -105,28 +117,34 @@
                                 <ul class="nav child_menu">
                                     <li><a href="{{route('chooseTemplate')}}">Choose Template</a></li>
                                     <?php
-                                    use App\Http\Models\Shop;
-                                    use Illuminate\Support\Facades\Session;
+
                                     if(Session::has('shopId')){
-                                        $shopId = Session::get('shopId');
+                                    $shopId = Session::get('shopId');
 
-                                        $vendorShop = Shop::where('shop_id', $shopId)->first();
+                                    $vendorShop = Shop::where('shop_id', $shopId)->first();
 
-                                        if($vendorShop->template != null){
-                                        ?>
-                                            <li><a href="{{route('designTemplate')}}">Design</a></li>
-                                             <li><a href="{{route('designTemplateText')}}">Design Text</a></li>
+                                    if($vendorShop->template != null){
+                                    ?>
+                                    <li><a href="{{route('designTemplate')}}">Design</a></li>
+                                    <li><a href="{{route('designTemplateText')}}">Design Text</a></li>
 
-                                <?php
+                                    <?php
 
-                                        }
+                                    }
                                     }
                                     ?>
 
-
-
                                 </ul>
                             </li>
+                                <?php
+                                if(Session::has('shopId')){
+                                    ?>
+                                <li><a href="{{route('showMessages',['shopId'=>$shopId])}}"><i class="fa fa-envelope"></i>Messages</a>
+                                </li>
+
+                            <?php
+                                }
+                                    ?>
 
                         </ul>
                     </div>
@@ -169,14 +187,7 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;"> Profile</a></li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <span class="badge bg-red pull-right">50%</span>
-                                        <span>Settings</span>
-                                    </a>
-                                </li>
-                                <li><a href="javascript:;">Help</a></li>
+                                <li><a href="{{route('myDetails')}}"> Profile</a></li>
                                 <li><a href="{{route('logout')}}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </li>
                             </ul>

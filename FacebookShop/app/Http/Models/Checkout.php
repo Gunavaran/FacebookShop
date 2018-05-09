@@ -16,7 +16,6 @@ class Checkout extends Model
 {
     protected $fillable=[
 
-        'shop_id',
         'product_id',
         'customer_id',
         'quantity',
@@ -28,11 +27,11 @@ class Checkout extends Model
     protected $primaryKey = ['customer_id','product_id','shop_id'];
     public $incrementing = false;
 
-    public function getCheckoutDetails($productId, $customerEmail, $shopId){
-        $customerId = Customer::where('email',$customerEmail)->value('customerId');
-        $checkouts = Checkout::where('shop_id',$shopId)->where('customer_id',$customerId)->where('product_id',$productId)->get();
+    public function getCheckoutDetails($customerId){
+        $checkouts = Checkout::where('customer_id',$customerId)->get();
         return $checkouts;
     }
+
 
     protected function setKeysForSaveQuery(Builder $query)
     {

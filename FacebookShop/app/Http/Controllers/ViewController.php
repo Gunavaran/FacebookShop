@@ -82,7 +82,7 @@ class ViewController
     {
         Session::put('template',Input::get('templateName'));
         if (Input::get('templateName') == 'titan') {
-            Session::put('shopId',13);
+            Session::put('siteShopId',13);
             return view('templates.titan.home');
         }
     }

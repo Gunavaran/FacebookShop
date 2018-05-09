@@ -25,13 +25,13 @@ class Message extends Model
     protected $table ="message";
     protected $primaryKey = 'message_id';
 
-    public function getReadMessages(){
-        $messages = Message::where('status', '1')->get();
+    public function getReadMessages($shopId){
+        $messages = Message::where('status', '1')->where('shop_id',$shopId)->get();
         return $messages;
     }
 
-    public function getUnreadMessages(){
-        $messages = Message::where('status', '0')->get();
+    public function getUnreadMessages($shopId){
+        $messages = Message::where('status', '0')->where('shop_id',$shopId)->get();
         return $messages;
     }
 }

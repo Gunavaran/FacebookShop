@@ -6,8 +6,9 @@
                 <?php
                 use App\Http\Models\Template;
                 use Illuminate\Support\Facades\Session;
-                $shopId = Session::get('shopId');
-                $sliderImages = Template::where('shop_id', $shopId)->where('category', 'slider_image')->get();
+                $shopId = Session::get('siteShopId');
+                $template = new Template();
+                $sliderImages = $template->getSliderImages($shopId);
                 $count = 0;
                 foreach($sliderImages as $sliderImage){
                 $imageName = $sliderImage->content;
@@ -22,7 +23,7 @@
                             <div class="font-alt mb-30 titan-title-size-1"></div>
                             <div class="font-alt mb-40 titan-title-size-3">
                                 <?php
-                                $text = Template::where('shop_id', $shopId)->where('category', 'text')->skip($count)->first();
+                                    $text = $template->getSliderText($shopId,$count);
                                 echo $text->content;
                                 ?>
                             </div>
@@ -39,7 +40,7 @@
                             {{--<div class="font-alt mb-30 titan-title-size-1">Hello &amp; welcome</div>--}}
                             <div class="font-alt mb-40 titan-title-size-4">
                                 <?php
-                                $text = Template::where('shop_id', $shopId)->where('category', 'text')->skip($count)->first();
+                                $text = $template->getSliderText($shopId,$count);
                                 echo $text->content;
                                 ?>
                             </div>
@@ -57,7 +58,7 @@
                         <div class="caption-content">
                             <div class="font-alt mb-40 titan-title-size-4">
                                 <?php
-                                $text = Template::where('shop_id', $shopId)->where('category', 'text')->skip($count)->first();
+                                $text = $template->getSliderText($shopId,$count);
                                 echo $text->content;
                                 ?>
                             </div>
@@ -100,7 +101,8 @@
                         <?php
                         use App\Http\Models\Category;
                         use App\Http\Models\Product;
-                        $categories = Category::where('shop_id', $shopId)->get();
+                        $category = new Category();
+                        $categories = $category->getCategories($shopId);
                         foreach($categories as $category){
                         ?>
                         <option value="{{$category->category_name}}">{{$category->category_name}}</option>
@@ -121,31 +123,32 @@
             <div class="row multi-columns-row">
 
                 <?php
+                $newProduct = new Product();
                 if (!Session::has('productCategory')) {
-                    $products = Product::where('shop_id', $shopId)->get();
+                    $products = $newProduct->getProducts($shopId);
                 } else if (Session::get('productCategory') == 'all') {
                     $sort = Session::get('sorting');
                     if ($sort == 'default') {
-                        $products = Product::where('shop_id', $shopId)->get();
+                        $products = $newProduct->getProducts($shopId);
                     } else if ($sort == 'high_price') {
-                        $products = Product::where('shop_id', $shopId)->orderBy('price','DESC')->get();
+                        $products=$newProduct->getHighPricedProducts($shopId);
                     } else if ($sort == 'low_price') {
-                        $products = Product::where('shop_id', $shopId)->orderBy('price','ASC')->get();
+                        $products = $newProduct->getLowPricedProducts($shopId);
                     } else if ($sort == 'latest') {
-                        $products = Product::where('shop_id', $shopId)->orderBy('created_at','DESC')->get();
+                        $products = $newProduct->getLatestProducts($shopId);
                     }
                     Session::forget('productCategory');
                     Session::forget('sorting');
                 } else {
                     $sort = Session::get('sorting');
                     if ($sort == 'default') {
-                        $products = Product::where('shop_id', $shopId)->where('product_category', Session::get('productCategory'))->get();
+                        $products = $newProduct->getCategorizedProducts($shopId,Session::get('productCategory'));
                     } else if ($sort == 'high_price') {
-                        $products = Product::where('shop_id', $shopId)->where('product_category', Session::get('productCategory'))->orderBy('price','DESC')->get();
+                        $products = $newProduct->getCategorizedHighPricedProducts($shopId,Session::get('productCategory'));
                     } else if ($sort == 'low_price') {
-                        $products = Product::where('shop_id', $shopId)->where('product_category', Session::get('productCategory'))->orderBy('price','ASC')->get();
+                        $products = $newProduct->getCategorizedLowPricedProducts($shopId,Session::get('productCategory'));
                     } else if ($sort == 'latest') {
-                        $products = Product::where('shop_id', $shopId)->where('product_category', Session::get('productCategory'))->orderBy('created_at','DESC')->get();
+                        $products = $newProduct->getCategorizedLatestProducts($shopId,Session::get('productCategory'));
                     }
                     Session::forget('productCategory');
                     Session::forget('sorting');

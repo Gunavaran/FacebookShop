@@ -47,7 +47,7 @@
                                 <input class="form-control col-md-7 col-xs-12" type="text" name="product_id" required
                                        value=<?php
                                     if (Input::has('productId')) {
-                                        $product->getProductDetails($productId, 'product_id');
+                                        echo $product->getProductDetails($productId, 'product_id');
                                     }
                                     ?>>
                             </div>
@@ -62,7 +62,7 @@
                                 <input class="form-control col-md-7 col-xs-12" type="text" name="product_name" required
                                        value="<?php
                                     if (Input::has('productId')) {
-                                        $product->getProductDetails($productId, 'product_name');
+                                        echo $product->getProductDetails($productId, 'product_name');
                                     }
                                     ?>">
                             </div>
@@ -95,13 +95,11 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Description *</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <textarea class="resizable_textarea form-control" name="description"
-                                          placeholder="brief description about the product">
-                                    <?php
+                                          placeholder="brief description about the product"><?php
                                     if (Input::has('productId')) {
-                                        $product->getProductDetails($productId, 'description');
+                                        echo $product->getProductDetails($productId, 'description');
                                     }
-                                    ?>
-                                </textarea>
+                                    ?></textarea>
                             </div>
                         </div>
 
@@ -111,7 +109,7 @@
                                 <input class="form-control col-md-7 col-xs-12" type="text" name="size"
                                        placeholder="leave it blank if not relevant" value=<?php
                                     if (Input::has('productId')) {
-                                        $product->getProductDetails($productId, 'size');
+                                        echo $product->getProductDetails($productId, 'size');
                                     }
                                     ?>>
                             </div>
@@ -123,7 +121,7 @@
                                 <input class="form-control col-md-7 col-xs-12" type="text" name="price" required
                                        value=<?php
                                     if (Input::has('productId')) {
-                                        $product->getProductDetails($productId, 'price');
+                                        echo $product->getProductDetails($productId, 'price');
                                     }
                                     ?>>
                             </div>
@@ -135,7 +133,7 @@
                                 <input class="form-control col-md-7 col-xs-12" type="text" name="currency_type"
                                        required value=<?php
                                     if (Input::has('productId')) {
-                                        $product->getProductDetails($productId, 'currency_type');
+                                        echo $product->getProductDetails($productId, 'currency_type');
                                     }
                                     ?>>
                             </div>
@@ -147,7 +145,7 @@
                                 <input class="form-control col-md-7 col-xs-12" type="text" name="items_available"
                                        placeholder="leave it blank if not relevant" value=<?php
                                     if (Input::has('productId')) {
-                                        $product->getProductDetails($productId, 'items_available');
+                                        echo $product->getProductDetails($productId, 'items_available');
                                     }
                                     ?>>
                             </div>
@@ -187,7 +185,7 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="tags_1" type="text" class="tags form-control" name="keywords[]" value=<?php
                                     if (Input::has('productId')) {
-                                        $product->getProductDetails($productId, 'keywords');
+                                        echo $product->getProductDetails($productId, 'keywords');
                                     }
                                     ?>>
                                 <div id="suggestions-container"

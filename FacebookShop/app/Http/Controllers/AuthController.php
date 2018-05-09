@@ -56,8 +56,9 @@ class AuthController extends Controller
             'email' => 'required|email|max:255',
             'password' => 'required|max:255'
         ]);
-        $password=DB::table('vendor')->select('password') -> where('email',$request['email']) -> first();
-        if(!count($password)){
+        $password = Vendor::where('email',$request->email)->first();
+
+        if($password == null){
             return view('loginform',['message'=>'email does not exist']);
         } elseif (!Hash::check($request['password'],$password->password)){
             return view('loginform', ['message'=>'Incorrect Password']);

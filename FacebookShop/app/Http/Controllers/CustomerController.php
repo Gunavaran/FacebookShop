@@ -35,7 +35,8 @@ class CustomerController extends Controller
             'password' => 'required|max:255'
         ]);
 
-        $password = Customer::where('email', $request->email)->first();
+        $password = Customer::where('email', $request->email)->where('shop_id',Session::get('siteShopId'))->first();
+
 
         if ($password == null) {
             Session::flash('error', 'Email does not exist. Please check your email.');
@@ -45,7 +46,9 @@ class CustomerController extends Controller
             Session::flash('error', 'Incorrect Password');
             return view('templates.titan.customerLogIn');
         } else {
-            Session::put('customer', $request->email);
+            $customer = new Customer();
+            $customerId = $customer->getCustomerId($request->email,Session::get('siteShopId'));
+            Session::put('customerId', $customerId);
             return redirect()->route('showTemplateHome');
         }
 
@@ -54,7 +57,7 @@ class CustomerController extends Controller
     public function registerCustomer(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|email|unique:customer,email|max:255',
+            'email' => 'required|email|max:255',
             'first_name' => 'required|max:30',
             'last_name' => 'required|max:30',
             'password' => 'required|confirmed|max:255'
@@ -67,7 +70,9 @@ class CustomerController extends Controller
         $customer->email = $request->email;
         $customer->password = bcrypt($request->password);
         $customer->save();
-        Session::put('customer', $request->email);
+
+        $newCustomerId  = Customer::where('email',$request->email)->where('shop_id',$request->shop_id)->value('customer_id');
+        Session::put('customerId', $newCustomerId);
         return redirect()->route('showTemplateHome');
 
 
@@ -75,7 +80,7 @@ class CustomerController extends Controller
 
     public function logout()
     {
-        Session::forget('customer');
+        Session::forget('customerId');
         return redirect()->route('showTemplateHome');
     }
 
@@ -87,7 +92,7 @@ class CustomerController extends Controller
         ]);
 
         $productId = Input::get('productId');
-        $customerId = Customer::where('email', Input::get('customerEmail'))->value('customer_id');
+        $customerId = Input::get('customerId');
 
         if(Feedback::where('product_id',$productId)->where('customer_id',$customerId)->first()){
             Session::flash('ratingFailure','You can rate a product only once');
@@ -102,6 +107,25 @@ class CustomerController extends Controller
         $feedback->save();
         Session::flash('ratingSuccess','Successfully saved');
         return redirect()->route('singleProduct',['productId'=>$productId]);
+
+    }
+
+    public function updateAccountDetails(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email|max:255',
+            'first_name' => 'required|max:30',
+            'last_name' => 'required|max:30',
+        ]);
+
+        $customer = Customer::where('customer_id',$request->customer_id)->first();
+        $customer->first_name = $request->first_name;
+        $customer->last_name = $request->last_name;
+        $customer->email = $request->email;
+        $customer->save();
+        return redirect()->route('accountSettings');
+    }
+
+    public function removeProduct(){
 
     }
 

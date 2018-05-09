@@ -4,8 +4,11 @@
     use Illuminate\Support\Facades\Input;
     use App\Http\Models\Product;
     use Illuminate\Support\Facades\Session;
+    use App\Http\Models\Feedback;
+    use App\Http\Models\Customer;
+
     $product = Product::where('product_id', Input::get('productId'))->first();
-    $shopId = Session::get('shopId');
+    $shopId = Session::get('siteShopId');
     $image = $product->file_name;
 
     ?>
@@ -30,18 +33,62 @@
                             <h1 class="product-title font-alt">{{$product ->product_name }}</h1>
                         </div>
                     </div>
+                    <?php
+
+                    $newFeedback = new Feedback();
+                    $count = $newFeedback->getFeedbackCount($product->product_id);
+                    if($count != 0 ){
+
+
+                    $feedbacks = $newFeedback->getFeedback($product->product_id);
+
+                    $totalRating = 0;
+                    foreach ($feedbacks as $feedback) {
+                        $rating = $feedback->rating;
+                        $totalRating += $rating;
+                    }
+
+                    $rating = round($totalRating / $count);
+
+                    ?>
                     <div class="row mb-20">
-                        <div class="col-sm-12"><span><i class="fa fa-star star"></i></span><span><i
-                                        class="fa fa-star star"></i></span><span><i
-                                        class="fa fa-star star"></i></span><span><i
-                                        class="fa fa-star star"></i></span><span><i
-                                        class="fa fa-star star-off"></i></span>
+                        <div class="col-sm-12">
+                            <?php
+                            for($i = 0; $i < $rating; $i++){
+                            ?>
+                            <span style="font-size: large"><i class="fa fa-star star"></i></span>
+                            <?php
+                            }
+
+                            for($i = 0; $i < 5 - $rating; $i++){
+                            ?>
+                            <span style="font-size: large"><i class="fa fa-star star-off"></i></span>
+                            <?php
+                            }
+
+                            ?>
+
                         </div>
                     </div>
+                    <?php
+                    }
+                    ?>
                     <div class="row mb-20">
                         <div class="col-sm-12">
                             <div class="price font-alt"><span
-                                        class="amount">{{$product->currency_type.' '.$product->price}}</span></div>
+                                        class="amount">{{$product->currency_type.' '.$product->price}}
+                                    <?php
+                                    if($product->availability == 'yes'){
+                                    ?>
+                                    <span style="font-size: xx-large; color: #00A000">[Available]</span>
+                                    <?php
+                                    } else{
+                                    ?>
+                                    <span style="font-size: xx-large; color: red">[Not Available]</span>
+                                    <?php
+                                    }
+                                    ?>
+                                </span></div>
                         </div>
                     </div>
                     <div class="row mb-20">
@@ -51,11 +98,13 @@
                             </div>
                         </div>
                     </div>
-                    <form method="POST" action="{{route('addToCart',['productId'=>$product->product_id,'shopId'=>$shopId,'customerEmail'=>Session::get('customer')])}}">
+                    <form method="POST"
+                          action="{{route('addToCart',['productId'=>$product->product_id,'shopId'=>$shopId,'customerId'=>Session::get('customerId')])}}">
                         {{csrf_field()}}
                         <div class="row mb-20">
                             <div class="col-sm-4 mb-sm-20">
-                                <input class="form-control input-lg" type="number" name="quantity" value="1" max="40" min="1" required/>
+                                <input class="form-control input-lg" type="number" name="quantity" value="1" max="40"
+                                       min="1" required/>
                             </div>
                             <div class="col-sm-8">
                                 <button type="submit" class="btn btn-lg btn-block btn-round btn-b">Add To Cart</button>
@@ -63,13 +112,14 @@
                         </div>
                     </form>
 
-                    <div class="row mb-20">
-                        <div class="col-sm-12">
-                            <div class="product_meta">Categories:<a href="#"> Man, </a><a href="#">Clothing, </a><a
-                                        href="#">T-shirts</a>
-                            </div>
-                        </div>
-                    </div>
+                    {{--****************When you are going to use tags*****************--}}
+                    {{--<div class="row mb-20">--}}
+                        {{--<div class="col-sm-12">--}}
+                            {{--<div class="product_meta">Tags:<a href="#"> Man, </a><a href="#">Clothing, </a><a--}}
+                                        {{--href="#">T-shirts</a>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                 </div>
             </div>
         </div>
@@ -80,7 +130,7 @@
                     <div class="comment-form mt-30">
                         <h4 style="font-size: xx-large;" class="comment-form-title font-alt"><b>Add review</b></h4>
                         <form method="post"
-                              action="{{route('rateProduct',['productId' => $product->product_id,'customerEmail' => Session::get('customer') ])}}">
+                              action="{{route('rateProduct',['productId' => $product->product_id,'customerId' => Session::get('customerId') ])}}">
                             {{csrf_field()}}
                             <div class="row">
                                 <div class="col-sm-4">
@@ -115,7 +165,7 @@
         </div>
 
         <div class="container">
-            <div class="row mt-70" >
+            <div class="row mt-70">
                 <div class="col-sm-12">
                     <ul class="nav nav-tabs font-alt" role="tablist">
                         <li><a href="#data-sheet" style="font-size: large" data-toggle="tab"><span
@@ -159,10 +209,9 @@
                         <div class="tab-pane" id="reviews">
                             <div class="comments reviews">
                                 <?php
-                                use App\Http\Models\Feedback;
-                                use App\Http\Models\Customer;
 
-                                $feedbacks = Feedback::where('product_id', $product->product_id)->get();
+                                $newFeedback = new Feedback();
+                                $feedbacks = $newFeedback->getFeedback($product->product_id);
                                 foreach($feedbacks as $feedback){
                                 $customerId = $feedback->customer_id;
                                 $firstName = Customer::where('customer_id', $customerId)->value('first_name');
