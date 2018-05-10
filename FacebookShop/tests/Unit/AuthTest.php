@@ -10,6 +10,7 @@ namespace Tests\Unit;
 
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FormController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
@@ -20,7 +21,8 @@ class AuthTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function test_saveVendorData_authenticate(){
+    public function test_saveVendorData_authenticate_updateUserDetails()
+    {
         Event::fake();
         $request = Request::create('/store', 'POST', [
             'firstName' => 'test firstname',
@@ -36,7 +38,7 @@ class AuthTest extends TestCase
         $authController = new AuthController();
         $authController->saveVendorData($request);
 
-        $this->assertDatabaseHas('vendor',[
+        $this->assertDatabaseHas('vendor', [
             'first_name' => 'test firstname'
         ]);
 
@@ -46,7 +48,23 @@ class AuthTest extends TestCase
         ]);
 
         $authController->authenticate($request2);
-        $this -> assertFalse(Session::has('message'));
+        $this->assertFalse(Session::has('message'));
+
+        $request2 = Request::create('/store', 'POST', [
+            'first_name' => 'test newfirstname',
+            'last_name' => 'test newlastName',
+            'contact_no' => '0772479350',
+            'country' => 'test country',
+        ]);
+
+        $formController = new FormController();
+        Session::put('username', 'testusername');
+
+        $formController->updateUserDetails($request2);
+
+        $this->assertDatabaseHas('vendor', [
+            'first_name' => 'test newfirstname'
+        ]);
 
     }
 
