@@ -23,19 +23,24 @@ class Customer extends Model
         'created_at',
         'updated_at'
     ];
-    protected $table ="customer";
+    protected $table = "customer";
     protected $primaryKey = 'customer_id';
 
-    public function getCustomerDetails($customerId,$detail){
-        $infor = Customer::where('customer_id',$customerId)->value($detail);
+    //a particular value of a column in customer table is returned
+    //customer Id and column name are input parameters
+    public function getCustomerDetails($customerId, $detail)
+    {
+        $infor = Customer::where('customer_id', $customerId)->value($detail);
         return $infor;
     }
 
-    public function getCustomerId($email,$shopId){
-        $customerId = Customer::where('email',$email)->where('shop_id',$shopId)->value('customer_id');
+    //returns the customers of a particular shop
+    //input parameters: customer email and shop Id
+    public function getCustomerId($email, $shopId)
+    {
+        $customerId = Customer::where('email', $email)->where('shop_id', $shopId)->value('customer_id');
         return $customerId;
     }
-
 
 
 }

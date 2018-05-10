@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Checkout extends Model
 {
-    protected $fillable=[
+    protected $fillable = [
 
         'product_id',
         'customer_id',
@@ -24,31 +24,34 @@ class Checkout extends Model
     ];
 
     protected $table = "checkout";
-    protected $primaryKey = ['customer_id','product_id','shop_id'];
+    protected $primaryKey = ['customer_id', 'product_id'];
     public $incrementing = false;
 
-    public function getCheckoutDetails($customerId){
-        $checkouts = Checkout::where('customer_id',$customerId)->get();
+    //returns the checkouts based on customer Id
+    public function getCheckoutDetails($customerId)
+    {
+        $checkouts = Checkout::where('customer_id', $customerId)->get();
         return $checkouts;
     }
 
-
+    //the next two methods are added to have a model with multiple primary keys
     protected function setKeysForSaveQuery(Builder $query)
     {
         $keys = $this->getKeyName();
-        if(!is_array($keys)){
+        if (!is_array($keys)) {
             return parent::setKeysForSaveQuery($query);
         }
 
-        foreach($keys as $keyName){
+        foreach ($keys as $keyName) {
             $query->where($keyName, '=', $this->getKeyForSaveQuery($keyName));
         }
 
         return $query;
     }
+
     protected function getKeyForSaveQuery($keyName = null)
     {
-        if(is_null($keyName)){
+        if (is_null($keyName)) {
             $keyName = $this->getKeyName();
         }
 
@@ -58,7 +61,6 @@ class Checkout extends Model
 
         return $this->getAttribute($keyName);
     }
-
 
 
 }

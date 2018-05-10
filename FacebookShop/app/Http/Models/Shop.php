@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
 
@@ -9,7 +11,8 @@ use Illuminate\Support\Facades\Session;
  * Date: 2/27/2018
  * Time: 6:17 AM
  */
-class Shop extends Model{
+class Shop extends Model
+{
     protected $fillable = [
         'shop_id',
         'shop_name',
@@ -24,36 +27,45 @@ class Shop extends Model{
         'username',
         'created_at'
     ];
-    protected $table ="shop";
+    protected $table = "shop";
     protected $primaryKey = 'shop_id';
 
-    public function getShopId(){
+    public function getShopId()
+    {
         $shop = Shop::where('username', Session::get('username'))->first();
         $shopId = $shop->shop_id;
         return $shopId;
     }
 
-    public function getCustomerCount($shopId){
+    //returns the number of customers a shop has.
+    //used for shop admin
+    public function getCustomerCount($shopId)
+    {
         $count = Customer::where('shop_id', $shopId)->count();
         return $count;
     }
 
-    public function checkShopExist($username){
+    //used to display some particular tabs in the dashboard if the shop has been created
+    public function checkShopExist($username)
+    {
         $shop = Shop::where('username', $username)->first();
-        if($shop == null){
+        if ($shop == null) {
             return false;
-        } else{
+        } else {
             return true;
         }
     }
 
-    public function getShopDetails($username,$detail){
-        $infor = Shop::where('username',$username)->value($detail);
+
+    public function getShopDetails($username, $detail)
+    {
+        $infor = Shop::where('username', $username)->value($detail);
         return $infor;
     }
 
-    public function getShopDetailsViaId($shopId,$detail){
-        $infor = Shop::where('shop_id',$shopId)->value($detail);
+    public function getShopDetailsViaId($shopId, $detail)
+    {
+        $infor = Shop::where('shop_id', $shopId)->value($detail);
         return $infor;
     }
 }

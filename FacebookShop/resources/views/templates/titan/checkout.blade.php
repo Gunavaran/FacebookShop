@@ -11,6 +11,9 @@
     $product = new Product();
     $shopId = Session::get('siteShopId');
 
+    $cartTotal = 0;
+    $currencyType = '';
+
     ?>
     <section class="module">
         <div class="container">
@@ -35,7 +38,10 @@
                         <?php
                         foreach($checkouts as $checkout){
                             $productId = $checkout->product_id;
-                                $image = $product->getProductDetails($productId,'file_name');
+                            $image = $product->getProductDetails($productId,'file_name');
+
+                            $cartTotal += $checkout->quantity * $product->getProductDetails($productId,'price');
+                            $currencyType = $product->getProductDetails($productId,'currency_type');
 
                         ?>
                         <tr>
@@ -53,7 +59,9 @@
                                 <h5 style="font-size: large" class="product-title font-alt">{{$product->getProductDetails($productId,'currency_type').' '.$checkout->quantity * $product->getProductDetails($productId,'price')}}</h5>
                             </td>
                             <td class="pr-remove">
-                                <button class="btn btn-primary btn-round btn-xs" href="{{route('removeFromCheckout',['customerId'=>$customerId,'productId'=>$productId])}}" style="font-size: medium">Remove</button>
+                                <a href="{{route('removeFromCheckout',['customerId'=>$customerId,'productId'=>$productId])}}">
+                                    <button class="btn btn-primary btn-round btn-xs"  style="font-size: medium">Remove</button>
+                                </a>
                             </td>
 
                         </tr>
@@ -89,20 +97,20 @@
             <div class="row mt-70">
                 <div class="col-sm-5 col-sm-offset-7">
                     <div class="shop-Cart-totalbox">
-                        <h4 class="font-alt">Cart Totals</h4>
+                        <h4 style="font-size: x-large" class="font-alt"><b>Cart Totals</b></h4>
                         <table class="table table-striped table-border checkout-table">
-                            <tbody>
+                            <tbody style="font-size: large">
                             <tr>
                                 <th>Cart Subtotal :</th>
-                                <td>£40.00</td>
+                                <td>{{$currencyType.' '.$cartTotal}}</td>
                             </tr>
-                            <tr>
-                                <th>Shipping Total :</th>
-                                <td>£2.00</td>
-                            </tr>
+                            {{--<tr>--}}
+                                {{--<th>Shipping Total :</th>--}}
+                                {{--<td>£2.00</td>--}}
+                            {{--</tr>--}}
                             <tr class="shop-Cart-totalprice">
                                 <th>Total :</th>
-                                <td>£42.00</td>
+                                <td>{{$currencyType.' '.$cartTotal}}</td>
                             </tr>
                             </tbody>
                         </table>

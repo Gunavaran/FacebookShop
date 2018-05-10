@@ -125,8 +125,4 @@ class CustomerController extends Controller
         return redirect()->route('accountSettings');
     }
 
-    public function removeProduct(){
-
-    }
-
 }

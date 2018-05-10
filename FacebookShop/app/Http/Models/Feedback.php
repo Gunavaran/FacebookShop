@@ -11,6 +11,7 @@ namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+
 class Feedback extends Model
 {
     protected $fillable = [
@@ -22,26 +23,28 @@ class Feedback extends Model
         'updated_at'
     ];
 
-    protected $table ="feedback";
-    protected $primaryKey = ['customer_id','product_id'];
+    protected $table = "feedback";
+    protected $primaryKey = ['customer_id', 'product_id'];
     public $incrementing = false;
 
+    //the next two methods are added to have model with multiple primary keys
     protected function setKeysForSaveQuery(Builder $query)
     {
         $keys = $this->getKeyName();
-        if(!is_array($keys)){
+        if (!is_array($keys)) {
             return parent::setKeysForSaveQuery($query);
         }
 
-        foreach($keys as $keyName){
+        foreach ($keys as $keyName) {
             $query->where($keyName, '=', $this->getKeyForSaveQuery($keyName));
         }
 
         return $query;
     }
+
     protected function getKeyForSaveQuery($keyName = null)
     {
-        if(is_null($keyName)){
+        if (is_null($keyName)) {
             $keyName = $this->getKeyName();
         }
 
@@ -52,13 +55,18 @@ class Feedback extends Model
         return $this->getAttribute($keyName);
     }
 
-    public function getFeedback($productId){
+    //return the feedback objects of a particular product
+    public function getFeedback($productId)
+    {
         $feedbacks = Feedback::where('product_id', $productId)->get();
         return $feedbacks;
     }
 
-    public function getFeedbackCount($productId){
-        $count = Feedback::where('product_id',$productId)->count();
+//    returns the number of feedback available for a particular product
+//    used to calculate the average rating
+    public function getFeedbackCount($productId)
+    {
+        $count = Feedback::where('product_id', $productId)->count();
         return $count;
     }
 

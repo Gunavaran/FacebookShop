@@ -44,5 +44,13 @@ class CheckoutController extends Controller
 
     }
 
+    public function removeProduct(){
+        $customerId = Input::get('customerId');
+        $productId = Input::get('productId');
+        $checkout = Checkout::where('customer_id',$customerId)->where('product_id',$productId)->first();
+        $checkout->delete();
+        return redirect()->route('checkoutPage');
+    }
+
 
 }

@@ -24,6 +24,7 @@ class Template extends Model
     public $incrementing = false;
     public $timestamps = false;
 
+    //following two methods are for having model with more than two primary keys
     protected function setKeysForSaveQuery(Builder $query)
     {
         $keys = $this->getKeyName();
@@ -56,7 +57,9 @@ class Template extends Model
         $sliderImages = Template::where('shop_id', $shopId)->where('category', 'slider_image')->get();
         return $sliderImages;
     }
-    public function getSliderText($shopId,$count){
+
+    public function getSliderText($shopId, $count)
+    {
         $text = Template::where('shop_id', $shopId)->where('category', 'text')->skip($count)->first();
         return $text;
 

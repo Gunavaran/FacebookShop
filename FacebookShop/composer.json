@@ -9,16 +9,16 @@
   "type": "project",
   "require": {
     "php": ">=5.6.4",
+    "ext-gd": "*",
     "barryvdh/laravel-ide-helper": "^2.4",
     "intervention/image": "^2.4",
     "laravel/framework": "5.4.*",
     "laravel/tinker": "~1.0",
-    "ext-gd": "*"
+    "phpunit/phpunit": "^5.7"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
-    "mockery/mockery": "0.9.*",
-    "phpunit/phpunit": "~5.7"
+    "mockery/mockery": "0.9.*"
   },
   "autoload": {
     "classmap": [
