@@ -62,12 +62,12 @@ class templateController
 
                 if (!file_exists('storage/' . $shopId . '/template/images/' . $fileName)) {
                     $image->storeAs('public/' . $shopId . '/template/images/', $fileName);
-                    Image::make('storage/' . $shopId . '/template/images/' . $fileName)->resize(1200, 600)->save('storage/' . $shopId . '/template/thumbnails/' . $fileName, 40);
+                    Image::make($image)->resize(1200, 600)->save(storage_path().'/app/public/'. $shopId . '/template/thumbnails/' . $fileName, 40);
 
                 } else {
                     $image->store('public/' . $shopId . '/template/images');
                     $fileName = $image->hashName();
-                    Image::make('storage/' . $shopId . '/template/images/' . $fileName)->resize(1200, 600)->save('storage/' . $shopId . '/template/thumbnails/' . $fileName, 40);
+                    Image::make($image)->resize(1200, 600)->save(storage_path().'/app/public/'. $shopId . '/template/thumbnails/' . $fileName, 40);
                 }
                 $template = new Template();
                 $template->shop_id = $shopId;
@@ -133,6 +133,10 @@ class templateController
 
     public function accountSettings(){
         return view('templates.titan.accountSettings');
+    }
+
+    public function gallery(){
+        return view('templates.photography.gallery');
     }
 
 

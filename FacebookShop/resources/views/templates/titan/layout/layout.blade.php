@@ -8,7 +8,18 @@
     Document Title
     =============================================
     -->
-    <title>Titan Template</title>
+    <title>
+        <?php
+        use App\Http\Models\Shop;
+        use Illuminate\Support\Facades\Session;
+        use App\Http\Models\Customer;
+        $shopId = Session::get('siteShopId');
+        $shop = new Shop();
+        $shopName = $shop->getShopDetailsViaId($shopId, 'shop_name');
+
+        echo $shopName;
+        ?>
+    </title>
     <!--
     Favicons
     =============================================
@@ -56,18 +67,11 @@
                             class="icon-bar"></span><span class="icon-bar"></span></button>
                 <a class="navbar-brand" href="
                 <?php
-                use App\Http\Models\Shop;
-                use Illuminate\Support\Facades\Session;
-                use App\Http\Models\Customer;
-                $shopId = Session::get('siteShopId');
                 echo route('showTemplateHome');
 
                 ?>">
 
                     <?php
-                    $shop = new Shop();
-                    $shopName = $shop->getShopDetailsViaId($shopId, 'shop_name');
-
                     echo $shopName;
                     ?></a>
             </div>

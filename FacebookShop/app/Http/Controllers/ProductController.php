@@ -10,6 +10,8 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Models\Category;
+use App\Http\Models\Counter;
+use App\Http\Models\Photo;
 use App\Http\Models\Product;
 use App\Http\Models\Shop;
 use Illuminate\Http\Request;
@@ -68,6 +70,7 @@ class ProductController extends Controller
 
     public function addProduct(Request $request)
     {
+
         if ($request->has('product_id')) {
             $this->validate($request, [
                 'price' => 'numeric'
@@ -100,12 +103,12 @@ class ProductController extends Controller
 
             if (!file_exists('storage/' . $shopId . '/images/' . $fileName)) {
                 $image->storeAs('public/' . $shopId . '/images/', $fileName);
-                Image::make('storage/' . $shopId . '/images/' . $fileName)->resize(600, 600)->save('storage/' . $shopId . '/thumbnails/' . $fileName, 40);
+                Image::make($image)->resize(600, 600)->save(storage_path() . '/app/public/' . $shopId . '/thumbnails/' . $fileName, 40);
 
             } else {
                 $image->store('public/' . $shopId . '/images');
                 $fileName = $image->hashName();
-                Image::make('storage/' . $shopId . '/images/' . $fileName)->resize(600, 600)->save('storage/' . $shopId . '/thumbnails/' . $fileName, 40);
+                Image::make($image)->resize(600, 600)->save(storage_path() . '/app/public/' . $shopId . '/thumbnails/' . $fileName, 40);
             }
 
             $product->file_name = $fileName;
@@ -132,29 +135,102 @@ class ProductController extends Controller
         $product->save();
         if ($request->has('product_id')) {
             Session::flash('success', 'Product Details are Updated Successfully');
-            return redirect() -> route('showSpecificProduct',['productId'=> $request->product_id]);
-        } else{
+            return redirect()->route('showSpecificProduct', ['productId' => $request->product_id]);
+        } else {
             Session::flash('success', 'Product is added Successfully');
             return redirect()->route('showNewProductForm');
         }
 
     }
 
-    public function removeProduct(){
+    public function removeProduct()
+    {
         $shop = new Shop();
         $shopId = $shop->getShopId();
 
         $productId = Input::get('productId');
-        $product = Product::where('product_id',$productId)->first();
+        $product = Product::where('product_id', $productId)->first();
         $imageName = $product->file_name;
 
-        File::delete('storage/'.$shopId.'/images/'.$imageName);
-        File::delete('storage/'.$shopId.'/thumbnails/'.$imageName);
+        File::delete('storage/' . $shopId . '/images/' . $imageName);
+        File::delete('storage/' . $shopId . '/thumbnails/' . $imageName);
         $product->delete();
 
         Session::flash('removeSuccess', 'Removed Successfully');
         return redirect()->route('showProductsDetails');
 
     }
+
+    public function uploadPhotos(Request $request)
+    {
+        if ($request->hasFile('images')) {
+
+            $shop = new Shop();
+            $shopId = $shop->getShopId();
+
+            if (!is_dir('storage/' . $shopId)) {
+                Storage::makeDirectory('public/' . $shopId);
+            }
+            if (!is_dir('storage/' . $shopId . '/images')) {
+                Storage::makeDirectory('public/' . $shopId . '/images');
+            }
+            if (!is_dir('storage/' . $shopId . '/thumbnails')) {
+                Storage::makeDirectory('public/' . $shopId . '/thumbnails');
+            }
+            foreach ($request->images as $image) {
+                $fileName = $image->getClientOriginalName();
+
+                if (!file_exists('storage/' . $shopId . '/images/' . $fileName)) {
+                    $image->storeAs('public/' . $shopId . '/images/', $fileName);
+                    Image::make($image)->save(storage_path() . '/app/public/' . $shopId . '/thumbnails/' . $fileName, 80);
+
+                } else {
+                    $image->store('public/' . $shopId . '/images');
+                    $fileName = $image->hashName();
+                    Image::make($image)->save(storage_path() . '/app/public/' . $shopId . '/thumbnails/' . $fileName, 80);
+                }
+
+                $photo = new Photo();
+                $photo->file_name = $fileName;
+                $photo->category = Session::get('category');
+                $photo->shop_id = $shopId;
+                $photo->save();
+
+            }
+            Session::forget('category');
+            Session::flash('success', 'Your files are uploaded successfully');
+            return redirect()->route('uploadPhotos_selectCategory');
+        } else {
+            Session::flash('failure', 'No files has been chosen');
+            return view('uploadPhotos');
+        }
+    }
+
+    public function removePhoto()
+    {
+        $photoId = Input::get('photoId');
+        $shopId = Session::get('shopId');
+
+        $photo = Photo::where('photo_id', $photoId)->first();
+        $imageName = $photo->file_name;
+        File::delete('storage/' . $shopId . '/images/' . $imageName);
+        File::delete('storage/' . $shopId . '/thumbnails/' . $imageName);
+        $photo->delete();
+        return redirect()->route('viewPhotos');
+
+    }
+
+    public function search(Request $request){
+        Session::put('searchCategory',$request['searchCategory']);
+        return redirect() -> route('viewPhotos');
+    }
+
+    public function updateViewCount(){
+        $imageID = Input::get('imgId');
+        $counter = new Counter();
+        $counter->photo_id = $imageID;
+        $counter->save();
+    }
+
 
 }

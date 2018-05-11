@@ -98,6 +98,9 @@ class ShopController extends Controller
         if ($shopTemplate == 'titan') {
             Session::put('siteShopId',Session::get('shopId'));
             return view('templates.titan.home');
+        } else if($shopTemplate == 'photography'){
+            Session::put('siteShopId',Session::get('shopId'));
+            return view('templates.photography.home');
         }
     }
 

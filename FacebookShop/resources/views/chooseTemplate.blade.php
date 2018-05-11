@@ -26,7 +26,7 @@
                             <div class="col-md-6">
                                 <div class="carousel-item-prev">
                                     <div class="image view view-first">
-                                        <img style="width: 100%; display: block;"
+                                        <img style="width: 100%; display: block;" height=350 width=800
                                              src="{{URL::asset('images/titan.jpg')}}" alt="image"/>
                                         <div class="mask">
                                             <div class="tools tools-bottom">
@@ -43,6 +43,30 @@
                                     </div>
                                     <div class="caption">
                                         <p>Multipurpose Template suitable for Shopping Websites</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="carousel-item-prev">
+                                    <div class="image view view-first">
+                                        <img style="width: 100%; display: block;"
+                                             height=350 width=800 src="{{URL::asset('images/photography.jpg')}}" alt="image"/>
+                                        <div class="mask">
+                                            <div class="tools tools-bottom">
+                                                <a href="{{route('showTemplateDemo',['templateName'=>'photography'])}}"
+                                                   target="_blank">
+                                                    <button type="button" class="btn btn-dark">Demo</button>
+                                                </a>
+                                                <a href="{{route('setTemplate',['templateName'=>'photography'])}}">
+                                                    <button type="button" class="btn btn-success">Select</button>
+
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <p>Photography/Multipurpose Template for Service Websites</p>
                                     </div>
                                 </div>
                             </div>

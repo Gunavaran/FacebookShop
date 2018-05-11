@@ -120,6 +120,7 @@ Route::get('customerLogIn','CustomerController@customerLogInPage')->name('custom
 Route::get('singleProduct','templateController@singleProduct')->name('singleProduct');
 Route::get('accountSettings','templateController@accountSettings')->name('accountSettings');
 Route::get('updateAccountDetails','CustomerController@updateAccountDetails')->name('updateAccountDetails');
+Route::get('gallery','templateController@gallery')->name('gallery');
 
 //=========================================Customer==========================================================
 
@@ -133,3 +134,12 @@ Route::post('rateProduct','CustomerController@rateProduct')->name('rateProduct')
 Route::get('checkoutPage','CheckoutController@showCheckout')->name('checkoutPage');
 Route::post('addToCart','CheckoutController@addToCart')->name('addToCart');
 Route::get('removeFromCheckout','CheckoutController@removeProduct')->name('removeFromCheckout');
+
+//==============================================Photos===========================================================
+Route::get('dashboard/selectCategory','ViewController@selectCategoryPage')->name('uploadPhotos_selectCategory');
+Route::post('dashboard/uploadPhotosForm','ViewController@showUploadPhotosForm') -> name('uploadPhotosForm');
+Route::post('dashboard/uploadPhotos','ProductController@uploadPhotos')->name('uploadPhotos');
+Route::get('dashboard/gallery','ViewController@viewPhotos')->name('viewPhotos');
+Route::get('dashboard/removePhoto','ProductController@removePhoto')->name('removePhoto');
+Route::post('dashboard/viewPhotos/search','ProductController@search')->name('search');
+Route::post('updateViewCounter','ProductController@updateViewCount')->name('updateViewCounter');

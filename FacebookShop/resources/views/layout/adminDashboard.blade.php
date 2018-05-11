@@ -69,11 +69,27 @@
                             use App\Http\Models\Shop;
                             use Illuminate\Support\Facades\Session;
                             if(Session::has('shopId')){
+                                $shop = new Shop();
+                                $shopTemplate = $shop->getShopDetailsViaId(Session::get('shopId'),'template');
                             ?>
                             <li><a href="{{route('viewMyShop')}} " target="_blank"><i class="fa fa-shopping-cart"></i>View
                                     My Shop</a>
                             </li>
                             <?php
+                                    if($shopTemplate == 'photography'){
+                                        ?>
+                                <li><a><i class="fa fa-photo"></i> Photos <span
+                                                class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="{{route('viewPhotos')}}">Gallery</a></li>
+                                        <li><a href="{{route('uploadPhotos_selectCategory')}}">Upload Photos</a>
+                                        </li>
+                                        <li><a href="{{route('showCategories')}}">Categories</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+
+                                    }
                             }
                             ?>
 
@@ -333,5 +349,8 @@
 <script>
     $('[data-toggle=confirmation]').confirmation();
 </script>
+
+<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/dropzone-bootsnipp/preview.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('vendorsTemplate/dropzone-bootsnipp/bootsnipp.js') }}"></script>
 </body>
 </html>

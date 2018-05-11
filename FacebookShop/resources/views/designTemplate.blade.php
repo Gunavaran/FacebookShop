@@ -28,7 +28,7 @@
 
                             $shop = new Shop();
                             $shopId = $shop->getShopId();
-                            if (Shop::where('shop_id', $shopId)->value('template') == 'titan') {
+                            if (Shop::where('shop_id', $shopId)->value('template') == 'titan' or Shop::where('shop_id', $shopId)->value('template') == 'photography' ) {
                             ?>
                             <html>
                             <head>

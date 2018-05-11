@@ -12,7 +12,7 @@ env_variables:
   # Put production environment variables here.
   APP_LOG: errorlog
   APP_DEBUG: true
-  APP_KEY: base64:eVzjgJI5U8dt06OPdyePxyeMoFCX0zilXA/YP4sdCwQ=
+  APP_KEY: base64:JmHH/lM3p29yu4uaNm4J4XEeXb74fyTUEA78cX7qFP4=
   STORAGE_DIR: /tmp
   CACHE_DRIVER: file
   SESSION_DRIVER: cookie
@@ -22,7 +22,7 @@ env_variables:
   DB_DATABASE: facebook_shop
   DB_USERNAME: facebook_shop
   DB_PASSWORD: guna1234
-  DB_SOCKET: "/cloudsql/tidy-bindery-203312:asia-south1:facebookshop"
+  DB_SOCKET: "/cloudsql/facebookshop-203722:us-central1:facebookshop"
 
 beta_settings:
-  cloud_sql_instances: tidy-bindery-203312:asia-south1:facebookshop
+  cloud_sql_instances:  facebookshop-203722:us-central1:facebookshop

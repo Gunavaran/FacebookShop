@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
@@ -84,6 +85,9 @@ class ViewController
         if (Input::get('templateName') == 'titan') {
             Session::put('siteShopId',13);
             return view('templates.titan.home');
+        } else if(Input::get('templateName') == 'photography'){
+            Session::put('siteShopId',14);
+            return view('templates.photography.home');
         }
     }
 
@@ -95,7 +99,26 @@ class ViewController
     public function showTemplateHome(){
         if(Session::get('template')=='titan'){
             return view('templates.titan.home');
+        } else if(Session::get('template')=='photography'){
+            return view('templates.photography.home');
         }
+    }
+
+    public function selectCategoryPage(){
+        return view('selectCategory');
+    }
+
+    public function showUploadPhotosForm(Request $request){
+        if (Session::has('username')) {
+            Session::put('category', $request['category_name']);
+            return view('uploadPhotos');
+        } else {
+            return view('loginform');
+        }
+    }
+
+    public function viewPhotos(){
+        return view('viewPhotos');
     }
 
 
