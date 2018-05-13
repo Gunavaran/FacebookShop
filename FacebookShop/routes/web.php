@@ -15,6 +15,7 @@
 //===========================================================Log In and Registration========================================
 
 //to display the log in form
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/loginform', 'AuthController@showLogInForm' )-> name('loginForm');
@@ -41,7 +42,7 @@ Route::get('dashboard', 'ViewController@showDashboard') -> name('dashboard');
 
 //route to the contact us form on home page which will store user message to message table
 Route::post('/Message','FormController@saveMessageData') -> name('contactUsForm');
-
+Route::get('dashboard/help','ViewController@help')->name('help');
 
 //====================================================Shop==================================================
 
@@ -143,3 +144,29 @@ Route::get('dashboard/gallery','ViewController@viewPhotos')->name('viewPhotos');
 Route::get('dashboard/removePhoto','ProductController@removePhoto')->name('removePhoto');
 Route::post('dashboard/viewPhotos/search','ProductController@search')->name('search');
 Route::post('updateViewCounter','ProductController@updateViewCount')->name('updateViewCounter');
+
+//================================================Facebook===================================================
+Route::get('dashboard/selectFacebookPage','ViewController@selectFacebookPage')->name('selectFacebookPage');
+
+Route::post('dashboard/createFacebookTab', function (\Illuminate\Http\Request $request){
+    require_once __DIR__ . '../vendor/autoload.php';
+
+    $fb = new Facebook\Facebook([
+        'app_id' => '373936209778018',
+        'app_secret' => '72094c189a4e25895733e4d8b581707c',
+        'default_graph_version' => 'v2.10'
+
+    ]);
+
+    $helper = $fb->getRedirectLoginHelper();
+    if (isset($_GET['state'])) {
+        $helper->getPersistentDataHandler()->set('state', $_GET['state']);
+    }
+
+    echo $request->page;
+    echo Input::get('accessToken');
+
+
+
+
+})->name('createFacebookTab');

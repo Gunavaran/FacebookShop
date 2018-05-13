@@ -38,8 +38,7 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="text" name="category_name" class="form-control"
-                                           aria-label="Text input with dropdown button"
-                                           value="{{$category->category_name}}">
+                                           value="{{$category->category_name}}" >
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-primary">Select</button>
                                     </div>
@@ -57,5 +56,6 @@
             </div>
         </div>
     </div>
+
 
 @endsection

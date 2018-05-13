@@ -121,5 +121,13 @@ class ViewController
         return view('viewPhotos');
     }
 
+    public function selectFacebookPage(){
+        return view('Facebook.selectFacebookPage');
+    }
+
+    public function help(){
+        return view('help');
+    }
+
 
 }

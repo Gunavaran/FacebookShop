@@ -39,4 +39,18 @@ class Vendor extends Model
         $infor = Vendor::where('username', $username)->value($detail);
         return $infor;
     }
+
+    public function getVendorCount(){
+        $count = Vendor::where('admin',0)->count();
+        return $count;
+    }
+
+    public function getLatestSignUps(){
+        $date = date('Y-m-d h:i:s');
+        $date = date_create($date);
+        date_sub($date, date_interval_create_from_date_string('7 days'));
+
+        $vendorCount = Vendor::where('created_at','>',$date)->count();
+        return $vendorCount;
+    }
 }

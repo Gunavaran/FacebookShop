@@ -69,32 +69,40 @@
                             use App\Http\Models\Shop;
                             use Illuminate\Support\Facades\Session;
                             if(Session::has('shopId')){
-                                $shop = new Shop();
-                                $shopTemplate = $shop->getShopDetailsViaId(Session::get('shopId'),'template');
+                            $shop = new Shop();
+                            $shopTemplate = $shop->getShopDetailsViaId(Session::get('shopId'), 'template');
+                            if($shopTemplate != null){
+
                             ?>
                             <li><a href="{{route('viewMyShop')}} " target="_blank"><i class="fa fa-shopping-cart"></i>View
                                     My Shop</a>
                             </li>
-                            <?php
-                                    if($shopTemplate == 'photography'){
-                                        ?>
-                                <li><a><i class="fa fa-photo"></i> Photos <span
-                                                class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="{{route('viewPhotos')}}">Gallery</a></li>
-                                        <li><a href="{{route('uploadPhotos_selectCategory')}}">Upload Photos</a>
-                                        </li>
-                                        <li><a href="{{route('showCategories')}}">Categories</a></li>
-                                    </ul>
-                                </li>
                                 <?php
+                                require_once __DIR__ . '/../../../vendor/autoload.php';
 
-                                    }
+                                $fb = new Facebook\Facebook([
+                                    'app_id' => '373936209778018',
+                                    'app_secret' => '72094c189a4e25895733e4d8b581707c',
+                                    'default_graph_version' => 'v2.10'
+
+                                ]);
+
+                                $helper = $fb->getRedirectLoginHelper();
+                                if (isset($_GET['state'])) {
+                                    $helper->getPersistentDataHandler()->set('state', $_GET['state']);
+                                }
+
+                                $redirectURL = route('selectFacebookPage');
+                                $permissions = ['manage_pages'];
+                                $loginURL = $helper->getLoginUrl($redirectURL, $permissions);
+                                    ?>
+
+                            <li><a href="{{$loginURL}}"><i class="fa fa-facebook-square"></i>Embed Into Facebook</a>
+                            </li>
+                            <?php
+                            }
                             }
                             ?>
-
-
-
                             {{--this tab deals with details of the vendor who is the user here--}}
                             <li><a><i class="fa fa-user"></i> Account <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
@@ -102,16 +110,54 @@
                                     <li><a href="{{route('changePassword')}}">Change Password</a></li>
                                 </ul>
                             </li>
-                            {{--This tab deals with shop that will be created--}}
-                            {{--For create shop option, a new button has to be put in the top menu bar--}}
+
+                            <?php
+                            if(!Session::has('admin')){
+                            ?>
                             <li><a><i class="fa fa-shopping-basket"></i> Shop <span
                                             class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="{{route('showCreateShopForm')}}">Create Shop</a></li>
+                                    <?php
+                                    if (Session::has('shopId')) {
+                                    ?>
                                     <li><a href="{{route('showShopDetails')}}">Shop Details</a></li>
+                                    <?php
+
+                                    } else {
+                                    ?>
+                                    <li><a href="{{route('showCreateShopForm')}}">Create Shop</a></li>
+                                    <?php
+
+                                    }
+                                    ?>
+
+
                                 </ul>
                             </li>
+                            <?php
+                            }
+                            ?>
 
+                            <?php
+                            if(Session::has('shopId')){
+                            $shop = new Shop();
+                            $shopTemplate = $shop->getShopDetailsViaId(Session::get('shopId'), 'template');
+
+                            if($shopTemplate == 'photography'){
+                            ?>
+                            <li><a><i class="fa fa-photo"></i> Photos <span
+                                            class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{route('viewPhotos')}}">Gallery</a></li>
+                                    <li><a href="{{route('uploadPhotos_selectCategory')}}">Upload Photos</a>
+                                    </li>
+                                    <li><a href="{{route('showCategories')}}">Categories</a></li>
+                                </ul>
+                            </li>
+                            <?php
+
+                            } else if($shopTemplate == 'titan'){
+                            ?>
                             <li><a><i class="fa fa-cubes"></i> Products <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="{{route('showCategories')}}">Categories</a></li>
@@ -119,21 +165,44 @@
                                     <li><a href="{{route('showProductsDetails')}}">Product Details</a></li>
                                 </ul>
                             </li>
+                            <?php
+                            }
+                            }
+                            ?>
 
+                            {{--This tab deals with shop that will be created--}}
+                            {{--For create shop option, a new button has to be put in the top menu bar--}}
+
+                            <?php
+                            if (Session::has('admin')){
+                            ?>
                             <li><a href="{{route('showMessages',['shopId',null])}}"><i class="fa fa-envelope"></i>Notifications</a>
                             </li>
-
                             <li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="{{route('showUsersList')}}">Users List</a></li>
                                     <li><a href="{{route('showShopsList')}}">Shops List</a></li>
                                 </ul>
                             </li>
+                            <?php
+                            }
+                            ?>
+
+                            <?php
+                            if (Session::has('shopId')) {
+                            $shopId = Session::get('shopId');
+                            $vendorShop = Shop::where('shop_id', $shopId)->first();
+
+                            ?>
                             <li><a><i class="fa fa-users"></i> Templates <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
+                                    <?php
+                                    if($vendorShop->template == null){
+
+                                    ?>
                                     <li><a href="{{route('chooseTemplate')}}">Choose Template</a></li>
                                     <?php
-
+                                    }
                                     if(Session::has('shopId')){
                                     $shopId = Session::get('shopId');
 
@@ -152,15 +221,18 @@
 
                                 </ul>
                             </li>
-                                <?php
-                                if(Session::has('shopId')){
-                                    ?>
-                                <li><a href="{{route('showMessages',['shopId'=>$shopId])}}"><i class="fa fa-envelope"></i>Messages</a>
-                                </li>
+                            <?php
+                            }
+                            if(Session::has('shopId')){
+                            ?>
+                            <li><a href="{{route('showMessages',['shopId'=>$shopId])}}"><i class="fa fa-envelope"></i>Messages</a>
+                            </li>
 
                             <?php
-                                }
-                                    ?>
+                            }
+                            ?>
+                            <li><a href="{{route('help')}}"><i class="fa fa-info-circle"></i>Help</a>
+                            </li>
 
                         </ul>
                     </div>

@@ -56,7 +56,6 @@ class Shop extends Model
         }
     }
 
-
     public function getShopDetails($username, $detail)
     {
         $infor = Shop::where('username', $username)->value($detail);
@@ -67,5 +66,10 @@ class Shop extends Model
     {
         $infor = Shop::where('shop_id', $shopId)->value($detail);
         return $infor;
+    }
+
+    public function getShopCount(){
+        $count = Shop::count();
+        return $count;
     }
 }

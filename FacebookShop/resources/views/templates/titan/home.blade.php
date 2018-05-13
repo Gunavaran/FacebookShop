@@ -79,7 +79,7 @@
         <div class="container">
             <form class="row" action="{{route('searchProductCategory')}}">
                 <div class="col-sm-4 mb-sm-20">
-                    <select class="form-control" name="sorting">
+                    <select class="form-control" name="sorting" style="font-size: large">
                         <option selected="selected" value="default">Default Sorting</option>
                         <option value="high_price">High Price</option>
                         <option value="low_price">Low Price</option>
@@ -96,7 +96,7 @@
                 {{--</div>--}}
 
                 <div class="col-sm-3 mb-sm-20">
-                    <select class="form-control" name="productCategory">
+                    <select class="form-control" name="productCategory" style="font-size: large">
                         <option selected="selected" value="all">All</option>
                         <?php
                         use App\Http\Models\Category;
@@ -112,7 +112,7 @@
                     </select>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-block btn-round btn-g" type="submit">Apply</button>
+                    <button style="font-size: medium" class="btn btn-block btn-round btn-b" type="submit">Apply</button>
                 </div>
             </form>
         </div>
@@ -163,8 +163,8 @@
                             <div class="shop-item-detail"><a href="{{route('singleProduct',['productId' => $product->product_id])}}" class="btn btn-round btn-b"><span class="icon-basket">Click For More</span></a>
                             </div>
                         </div>
-                        <h4 class="shop-item-title font-alt"><a href="{{route('singleProduct',['productId' => $product->product_id])}}">{{$product->product_name}}</a>
-                        </h4>{{$product->currency_type.' '.$product->price}}
+                        <h4 class="shop-item-title font-alt"><a style="font-size: large" href="{{route('singleProduct',['productId' => $product->product_id])}}">{{$product->product_name}}</a>
+                        </h4><span style="font-size: large; color: #007bff">{{$product->currency_type.' '.$product->price}}</span>
                     </div>
                 </div>
 

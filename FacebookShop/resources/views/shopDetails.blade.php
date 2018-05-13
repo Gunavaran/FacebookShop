@@ -47,7 +47,7 @@
                             <label for="shop_id" class="control-label col-md-3 col-sm-3 col-xs-12"> Shop ID * </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="shop_id" class="form-control col-md-7 col-xs-12" type="text" name="shop_id"
-                                       value="{{$shop->getShopDetails($username,'shop_id')}}">
+                                       value="{{$shop->getShopDetails($username,'shop_id')}}" readonly>
                             </div>
                         </div>
 
