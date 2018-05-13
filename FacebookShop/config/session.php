@@ -148,7 +148,7 @@ return [
     |
     */
 
-    'domain' => 'facebookshop-203722.appspot.com',
+    'domain' => env('SESSION_DOMAIN', null),
 
     /*
     |--------------------------------------------------------------------------

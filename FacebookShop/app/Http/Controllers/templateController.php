@@ -27,6 +27,8 @@ class templateController
         $vendorShop = Shop::where('shop_id', $shopId)->first();
         $vendorShop->template = Input::get('templateName');
         $vendorShop->save();
+
+        //check and create directories if they do not exist
         if (!is_dir('storage/' . $shopId . '/template')) {
             Storage::makeDirectory('public/' . $shopId . '/template');
         }
@@ -52,6 +54,10 @@ class templateController
         return view('designTemplateText');
     }
 
+    /*
+     * slider image and slider texts are what shown in the home pages of templates
+     * function to update the slider text should be included
+     */
 
     public function setSliderImage(Request $request)
     {
@@ -62,12 +68,12 @@ class templateController
 
                 if (!file_exists('storage/' . $shopId . '/template/images/' . $fileName)) {
                     $image->storeAs('public/' . $shopId . '/template/images/', $fileName);
-                    Image::make($image)->resize(1200, 600)->save(storage_path().'/app/public/'. $shopId . '/template/thumbnails/' . $fileName, 40);
+                    Image::make($image)->resize(1200, 600)->save(storage_path() . '/app/public/' . $shopId . '/template/thumbnails/' . $fileName, 40);
 
                 } else {
                     $image->store('public/' . $shopId . '/template/images');
                     $fileName = $image->hashName();
-                    Image::make($image)->resize(1200, 600)->save(storage_path().'/app/public/'. $shopId . '/template/thumbnails/' . $fileName, 40);
+                    Image::make($image)->resize(1200, 600)->save(storage_path() . '/app/public/' . $shopId . '/template/thumbnails/' . $fileName, 40);
                 }
                 $template = new Template();
                 $template->shop_id = $shopId;
@@ -127,18 +133,20 @@ class templateController
         return redirect()->route('showTemplateHome');
     }
 
-    public function singleProduct(){
+    public function singleProduct()
+    {
         return view('templates.titan.singleProduct');
     }
 
-    public function accountSettings(){
+    public function accountSettings()
+    {
         return view('templates.titan.accountSettings');
     }
 
-    public function gallery(){
+    public function gallery()
+    {
         return view('templates.photography.gallery');
     }
-
 
 
 }

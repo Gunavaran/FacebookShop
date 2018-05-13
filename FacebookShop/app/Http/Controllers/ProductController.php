@@ -68,6 +68,11 @@ class ProductController extends Controller
         return redirect()->route('showCategories');
     }
 
+    /*
+     * when adding product, original image as well as the thumbnail is also saved
+     * original images are used for sliders and maximized photos in the photography template
+     * if the directories does not exist, they will be created
+     */
     public function addProduct(Request $request)
     {
 
@@ -87,6 +92,7 @@ class ProductController extends Controller
             $shop = new Shop();
             $shopId = $shop->getShopId();
 
+            //to create directories, if they don't exist
             if (!is_dir('storage/' . $shopId)) {
                 Storage::makeDirectory('public/' . $shopId);
             }
@@ -101,6 +107,7 @@ class ProductController extends Controller
 
             $fileName = $image->getClientOriginalName();
 
+            //to store images
             if (!file_exists('storage/' . $shopId . '/images/' . $fileName)) {
                 $image->storeAs('public/' . $shopId . '/images/', $fileName);
                 Image::make($image)->resize(600, 600)->save(storage_path() . '/app/public/' . $shopId . '/thumbnails/' . $fileName, 40);
@@ -143,6 +150,7 @@ class ProductController extends Controller
 
     }
 
+    //when removing products, data should be deleted from database and images and thumbnails should be deleted from storage
     public function removeProduct()
     {
         $shop = new Shop();
@@ -161,6 +169,7 @@ class ProductController extends Controller
 
     }
 
+    //multiple photo upload is possible
     public function uploadPhotos(Request $request)
     {
         if ($request->hasFile('images')) {
@@ -220,12 +229,16 @@ class ProductController extends Controller
 
     }
 
-    public function search(Request $request){
-        Session::put('searchCategory',$request['searchCategory']);
-        return redirect() -> route('viewPhotos');
+    public function search(Request $request)
+    {
+        Session::put('searchCategory', $request['searchCategory']);
+        return redirect()->route('viewPhotos');
     }
 
-    public function updateViewCount(){
+
+    //view counter for each photo (only for photography template)
+    public function updateViewCount()
+    {
         $imageID = Input::get('imgId');
         $counter = new Counter();
         $counter->photo_id = $imageID;

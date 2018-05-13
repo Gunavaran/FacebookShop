@@ -22,6 +22,11 @@ class CheckoutController extends Controller
         return view('templates.titan.checkout');
     }
 
+    /*
+     * adds product to the checkout
+     * if a particular product already exists, cannot add the same product
+     */
+
     public function addToCart(Request $request)
     {
 
@@ -31,7 +36,7 @@ class CheckoutController extends Controller
         $product = new Product();
         $availability = $product->checkAvailability($productId);
 
-        if($availability == 'yes'){
+        if ($availability == 'yes') {
             $check = Checkout::where('product_id', $productId)->where('customer_id', $customerId)->first();
             if ($check == null) {
                 $checkout = new Checkout();
@@ -46,17 +51,18 @@ class CheckoutController extends Controller
                 Session::put('checkoutFailure', 'checkout failed');
                 return redirect()->route('singleProduct', ['productId' => $productId]);
             }
-        } else{
+        } else {
             Session::put('notAvailable', 'checkout failed');
             return redirect()->route('singleProduct', ['productId' => $productId]);
         }
 
     }
 
-    public function removeProduct(){
+    public function removeProduct()
+    {
         $customerId = Input::get('customerId');
         $productId = Input::get('productId');
-        $checkout = Checkout::where('customer_id',$customerId)->where('product_id',$productId)->first();
+        $checkout = Checkout::where('customer_id', $customerId)->where('product_id', $productId)->first();
         $checkout->delete();
         return redirect()->route('checkoutPage');
     }

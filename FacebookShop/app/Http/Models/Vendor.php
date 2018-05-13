@@ -40,11 +40,13 @@ class Vendor extends Model
         return $infor;
     }
 
+    //for the admin. returns the number of users of the system
     public function getVendorCount(){
         $count = Vendor::where('admin',0)->count();
         return $count;
     }
 
+    //for the admin. returns the sign up in the last week
     public function getLatestSignUps(){
         $date = date('Y-m-d h:i:s');
         $date = date_create($date);

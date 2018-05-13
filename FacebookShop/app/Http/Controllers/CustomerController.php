@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 class CustomerController extends Controller
 {
 
+
     public function customerLogInPage()
     {
         return view('templates.titan.customerLogIn');
@@ -35,7 +36,7 @@ class CustomerController extends Controller
             'password' => 'required|max:255'
         ]);
 
-        $password = Customer::where('email', $request->email)->where('shop_id',Session::get('siteShopId'))->first();
+        $password = Customer::where('email', $request->email)->where('shop_id', Session::get('siteShopId'))->first();
 
 
         if ($password == null) {
@@ -47,7 +48,7 @@ class CustomerController extends Controller
             return view('templates.titan.customerLogIn');
         } else {
             $customer = new Customer();
-            $customerId = $customer->getCustomerId($request->email,Session::get('siteShopId'));
+            $customerId = $customer->getCustomerId($request->email, Session::get('siteShopId'));
             Session::put('customerId', $customerId);
             return redirect()->route('showTemplateHome');
         }
@@ -71,7 +72,7 @@ class CustomerController extends Controller
         $customer->password = bcrypt($request->password);
         $customer->save();
 
-        $newCustomerId  = Customer::where('email',$request->email)->where('shop_id',$request->shop_id)->value('customer_id');
+        $newCustomerId = Customer::where('email', $request->email)->where('shop_id', $request->shop_id)->value('customer_id');
         Session::put('customerId', $newCustomerId);
         return redirect()->route('showTemplateHome');
 
@@ -94,9 +95,9 @@ class CustomerController extends Controller
         $productId = Input::get('productId');
         $customerId = Input::get('customerId');
 
-        if(Feedback::where('product_id',$productId)->where('customer_id',$customerId)->first()){
-            Session::flash('ratingFailure','You can rate a product only once');
-            return redirect()->route('singleProduct',['productId'=>$productId]);
+        if (Feedback::where('product_id', $productId)->where('customer_id', $customerId)->first()) {
+            Session::flash('ratingFailure', 'You can rate a product only once');
+            return redirect()->route('singleProduct', ['productId' => $productId]);
         }
 
         $feedback = new Feedback();
@@ -105,19 +106,20 @@ class CustomerController extends Controller
         $feedback->rating = $request->rating;
         $feedback->feedback = $request->feedback;
         $feedback->save();
-        Session::flash('ratingSuccess','Successfully saved');
-        return redirect()->route('singleProduct',['productId'=>$productId]);
+        Session::flash('ratingSuccess', 'Successfully saved');
+        return redirect()->route('singleProduct', ['productId' => $productId]);
 
     }
 
-    public function updateAccountDetails(Request $request){
+    public function updateAccountDetails(Request $request)
+    {
         $this->validate($request, [
             'email' => 'required|email|max:255',
             'first_name' => 'required|max:30',
             'last_name' => 'required|max:30',
         ]);
 
-        $customer = Customer::where('customer_id',$request->customer_id)->first();
+        $customer = Customer::where('customer_id', $request->customer_id)->first();
         $customer->first_name = $request->first_name;
         $customer->last_name = $request->last_name;
         $customer->email = $request->email;

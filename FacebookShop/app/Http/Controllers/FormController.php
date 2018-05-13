@@ -100,6 +100,7 @@ class FormController extends Controller
 
     }
 
+    //these are the messages sent to the vendors by the customers. Not the ones that are sent to the admin
     public function storeShopMessage(Request $request)
     {
         $this->validate($request, [

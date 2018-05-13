@@ -68,6 +68,8 @@ class ViewController
         return view('myDetails', ['username' => Input::get('username')]);
     }
 
+//    =======================end of admin=======================================
+
     public function showProductsList()
     {
         return view('productDetails');
@@ -81,12 +83,12 @@ class ViewController
 
     public function showTemplateDemo()
     {
-        Session::put('template',Input::get('templateName'));
+        Session::put('template', Input::get('templateName'));
         if (Input::get('templateName') == 'titan') {
-            Session::put('siteShopId',13);
+            Session::put('siteShopId', 13);
             return view('templates.titan.home');
-        } else if(Input::get('templateName') == 'photography'){
-            Session::put('siteShopId',14);
+        } else if (Input::get('templateName') == 'photography') {
+            Session::put('siteShopId', 14);
             return view('templates.photography.home');
         }
     }
@@ -96,19 +98,26 @@ class ViewController
         return view('chooseTemplate');
     }
 
-    public function showTemplateHome(){
-        if(Session::get('template')=='titan'){
+
+    //redirects to the home page of the templates
+    public function showTemplateHome()
+    {
+        if (Session::get('template') == 'titan') {
             return view('templates.titan.home');
-        } else if(Session::get('template')=='photography'){
+        } else if (Session::get('template') == 'photography') {
             return view('templates.photography.home');
         }
     }
 
-    public function selectCategoryPage(){
+    //redirects to select a category before uploading photos. only for photography template
+    public function selectCategoryPage()
+    {
         return view('selectCategory');
     }
 
-    public function showUploadPhotosForm(Request $request){
+    //only for photography template
+    public function showUploadPhotosForm(Request $request)
+    {
         if (Session::has('username')) {
             Session::put('category', $request['category_name']);
             return view('uploadPhotos');
@@ -117,15 +126,19 @@ class ViewController
         }
     }
 
-    public function viewPhotos(){
+    public function viewPhotos()
+    {
         return view('viewPhotos');
     }
 
-    public function selectFacebookPage(){
+    public function selectFacebookPage()
+    {
         return view('Facebook.selectFacebookPage');
     }
 
-    public function help(){
+    //the help tab in the dashboard
+    public function help()
+    {
         return view('help');
     }
 

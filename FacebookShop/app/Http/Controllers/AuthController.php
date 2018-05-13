@@ -18,7 +18,12 @@ use App\Http\Models\Shop;
 
 class AuthController extends Controller
 {
-    public function saveVendorData (Request $request){
+    /*
+     *saves data from the user register / sign up page
+     * required validation done in html page too
+     */
+    public function saveVendorData(Request $request)
+    {
         $this->validate($request, [
             'firstName' => 'required|max:30',
             'lastName' => 'required|max:30',
@@ -30,62 +35,72 @@ class AuthController extends Controller
         ]);
 
         $vendor = new Vendor();
-        $vendor -> first_name = $request['firstName'];
-        $vendor -> last_name = $request['lastName'];
-        $vendor -> email = $request['email'];
-        $vendor -> contact_no = $request['contactNo'];
-        $vendor -> country = $request['country'];
-        $vendor -> username = $request['username'];
-        $vendor -> password = bcrypt($request['password']);
-        $vendor -> save();
-        Session::put('username',$request->username);
+        $vendor->first_name = $request['firstName'];
+        $vendor->last_name = $request['lastName'];
+        $vendor->email = $request['email'];
+        $vendor->contact_no = $request['contactNo'];
+        $vendor->country = $request['country'];
+        $vendor->username = $request['username'];
+        $vendor->password = bcrypt($request['password']);
+        $vendor->save();
+        Session::put('username', $request->username);
         return view('dashboard');
 
     }
 
-    public function showLogInForm(){
-        return  view('loginform');
+    public function showLogInForm()
+    {
+        return view('loginform');
     }
 
-    public function showVendorRegistrationForm(){
+    public function showVendorRegistrationForm()
+    {
         return view('registration');
     }
 
-    public function authenticate(Request $request){
-        $this -> validate($request, [
+    /*
+     * two kinds of login, as a vendor or as an admin
+     * but both are redirected to same page
+     * session:admin is the only difference
+     * also put shop id in the session, if shop exists
+     */
+    public function authenticate(Request $request)
+    {
+        $this->validate($request, [
             'email' => 'required|email|max:255',
             'password' => 'required|max:255'
         ]);
-        $password = Vendor::where('email',$request->email)->first();
+        $password = Vendor::where('email', $request->email)->first();
 
-        if($password == null){
-            return view('loginform',['message'=>'email does not exist']);
-        } elseif (!Hash::check($request['password'],$password->password)){
-            return view('loginform', ['message'=>'Incorrect Password']);
-        } elseif(DB::table('vendor')-> where('email',$request['email'])->value('admin')) {
+        if ($password == null) {
+            return view('loginform', ['message' => 'email does not exist']);
+        } elseif (!Hash::check($request['password'], $password->password)) {
+            return view('loginform', ['message' => 'Incorrect Password']);
+        } elseif (DB::table('vendor')->where('email', $request['email'])->value('admin')) {
             //admin log in
-            Session::put('username',DB::table('vendor')-> where('email',$request['email']) -> value('username'));
-            Session::put('admin','true');
-            $shop = Shop::where('username',DB::table('vendor')-> where('email',$request['email']) -> value('username') )->first();
-            if($shop != null){
-                Session::put('shopId',$shop->shop_id);
+            Session::put('username', DB::table('vendor')->where('email', $request['email'])->value('username'));
+            Session::put('admin', 'true');
+            $shop = Shop::where('username', DB::table('vendor')->where('email', $request['email'])->value('username'))->first();
+            if ($shop != null) {
+                Session::put('shopId', $shop->shop_id);
             }
             return view('dashboard');
-        } else{
+        } else {
             //vendor log in
-            Session::put('username',DB::table('vendor')-> where('email',$request['email']) -> value('username'));
-            $shop = Shop::where('username',DB::table('vendor')-> where('email',$request['email']) -> value('username') )->first();
-            if($shop != null){
-                Session::put('shopId',$shop->shop_id);
+            Session::put('username', DB::table('vendor')->where('email', $request['email'])->value('username'));
+            $shop = Shop::where('username', DB::table('vendor')->where('email', $request['email'])->value('username'))->first();
+            if ($shop != null) {
+                Session::put('shopId', $shop->shop_id);
             }
             return view('dashboard');
         }
 
     }
 
-    public function logout(){
+    public function logout()
+    {
         Session::flush();
-        return  view('loginform');
+        return view('loginform');
     }
 
 }

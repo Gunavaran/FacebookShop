@@ -39,21 +39,21 @@
                         <div class="form-group">
                             <label for="old_password" class="control-label col-md-3 col-sm-3 col-xs-12"> Old Password *</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="old_password" class="form-control col-md-7 col-xs-12" type="text" name="old_password" required>
+                                <input id="old_password" class="form-control col-md-7 col-xs-12" type="password" name="old_password" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="new_password" class="control-label col-md-3 col-sm-3 col-xs-12"> New Password *</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="new_password" class="form-control col-md-7 col-xs-12" type="text" name="new_password" required>
+                                <input id="new_password" class="form-control col-md-7 col-xs-12" type="password" name="new_password" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="confirm_password" class="control-label col-md-3 col-sm-3 col-xs-12"> Confirm Password *</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="new_password_confirmation" class="form-control col-md-7 col-xs-12" type="text" name="new_password_confirmation" required >
+                                <input id="new_password_confirmation" class="form-control col-md-7 col-xs-12" type="password" name="new_password_confirmation" required >
                             </div>
                         </div>
 

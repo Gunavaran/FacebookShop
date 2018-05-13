@@ -52,6 +52,9 @@ class Template extends Model
         return $this->getAttribute($keyName);
     }
 
+    /*
+     * the following two methods are used to get the slider images and texts set by the vendor
+     */
     public function getSliderImages($shopId)
     {
         $sliderImages = Template::where('shop_id', $shopId)->where('category', 'slider_image')->get();

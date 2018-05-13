@@ -27,12 +27,19 @@ class Photo extends Model
     protected $table = "photo";
     protected $primaryKey = "photo_id";
 
+    /*
+     * these functions are valid only if the photography template is chosen
+     */
+
+    //returns the photos of a particular shop
     public function getPhotos($shopId){
         $photos = Photo::where('shop_id',$shopId)->get();
         return $photos;
 
     }
 
+    //given the shop and category, returns photos of that particular category.
+    //used in View Photos tab
     public function getCategorizedPhotos($shopId, $category){
         $photos = Photo::where('shop_id',$shopId)->where('category',$category)->get();
         return $photos;
@@ -43,6 +50,11 @@ class Photo extends Model
         return $photo;
     }
 
+    /*
+     * returns number of photos as specified
+     * order cannot be defined
+     * the topmost photos will be returned
+     */
     public function getLimitedPhotos($shopId,$category,$num){
         $photos = Photo::where('shop_id',$shopId)->where('category', $category)->take($num)->get();
         return $photos;
