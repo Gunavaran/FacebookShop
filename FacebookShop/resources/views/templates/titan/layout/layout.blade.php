@@ -231,3 +231,13 @@ JavaScripts
     </script>
 {{Session::forget('checkoutFailure')}}
 @endif
+
+
+@if(Session::has('notAvailable'))
+    <script type='text/javascript'>
+        $(window).on('load', function () {
+            $('#notAvailableMessage').modal('show');
+        });
+    </script>
+{{Session::forget('notAvailable')}}
+@endif

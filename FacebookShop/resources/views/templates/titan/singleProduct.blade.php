@@ -294,6 +294,23 @@
             </div>
         </div>
     </div>
+    <div class="modal fade success-popup" id="notAvailableMessage" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Sorry!!!</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="lead">The product is not available...</p>
+                    {{--<a  class="rd_more btn btn-default">OK</a>--}}
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="modal fade success-popup" id="checkoutFailure" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-sm" role="document">

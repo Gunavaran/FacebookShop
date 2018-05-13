@@ -14,34 +14,35 @@
 
 //===========================================================Log In and Registration========================================
 
-//to display the log in form
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 
+//display the log in form
 Route::get('/loginform', 'AuthController@showLogInForm' )-> name('loginForm');
 
-//to display vendor registration form
+//display vendor registration form
 Route::get('/registration', 'AuthController@showVendorRegistrationForm')-> name('registrationForm');
 
-//to create and save vendor data
+//create and save vendor data
 Route::post('registration','AuthController@saveVendorData') ->name('registerUser');
 
-//to authenticate the vendor/admin
+//authenticate the vendor/admin
 Route::get('authentication','AuthController@authenticate') -> name('authenticate');
 
-//to logout
+//logout
 Route::get('logout','AuthController@logout')-> name('logout');
 
 //======================================================Pages==============================================
 
 //route to the homepage which is the first page to be shown before log in
-Route::get('/', 'ViewController@showHome')-> name('home');
+Route::any('/', 'ViewController@showHome')-> name('home');
 
 //dashboard layout. no content
 Route::get('dashboard', 'ViewController@showDashboard') -> name('dashboard');
 
 //route to the contact us form on home page which will store user message to message table
 Route::post('/Message','FormController@saveMessageData') -> name('contactUsForm');
+
+//help tab in dashboard
 Route::get('dashboard/help','ViewController@help')->name('help');
 
 //====================================================Shop==================================================
@@ -60,7 +61,11 @@ Route::get('/dashboard/shopDetails','ShopController@showShopDetails') -> name('s
 
 //to display and update shop details
 Route::post('/dashboard/updateShopDetails', 'ShopController@updateShopData') -> name('updateShopDetails');
+
+//shop details tab in dashboard
 Route::get('dashboard/viewMyShop','ShopController@viewMyShop')->name('viewMyShop');
+
+//contact form in the page for customer to contact vendor
 Route::post('storeShopMessage','FormController@storeShopMessage')->name('storeShopMessage');
 
 //=================================================Product======================================================
@@ -105,15 +110,24 @@ Route::get('/dashboard/specificVendor','ViewController@showSpecificVendor')->nam
 
 //=============================================Templates===================================================
 
+/*
+ * demo is actually from vendors created for demo purpose.
+ * as of 2018.05.13, teo templates and two vendors as demos are there. shop ids(13,14)
+ */
 Route::get('dashboard/titan-home','ViewController@showTemplateDemo')->name('showTemplateDemo');
+
+//choose template tab and the controller to set template
 Route::get('dashboard/chooseTemplate','ViewController@chooseTemplate')->name('chooseTemplate');
 Route::get('dashboard/setTemplate','templateController@setTemplate')->name('setTemplate');
+
+//modifying the template features
 Route::get('dashboard/designTemplate','templateController@designTemplate')->name('designTemplate');
 Route::post('dashboard/setSliderImage','templateController@setSliderImage')->name('setSliderImage');
 Route::post('dashboard/setSliderText','templateController@setSliderText')->name('setSliderText');
 Route::get('dashboard/designTemplateText','templateController@designTemplateText')->name('designTemplateText');
 Route::get('dashboard/Templates/removeSliderImage','templateController@removeSliderImage')->name('removeSliderImage');
 Route::post('dashboard/Templates/removeSliderText','templateController@removeSliderText')->name('removeSliderText');
+
 //---------------------------------------
 Route::get('searchProductCategory','templateController@searchProductCategory')->name('searchProductCategory');
 Route::get('showTemplateHome','ViewController@showTemplateHome')->name('showTemplateHome');
@@ -146,10 +160,15 @@ Route::post('dashboard/viewPhotos/search','ProductController@search')->name('sea
 Route::post('updateViewCounter','ProductController@updateViewCount')->name('updateViewCounter');
 
 //================================================Facebook===================================================
-Route::get('dashboard/selectFacebookPage','ViewController@selectFacebookPage')->name('selectFacebookPage');
+Route::match(array('GET','POST'),'dashboard/selectFacebookPage','ViewController@selectFacebookPage')->name('selectFacebookPage');
 
+
+/*
+ * the following route deals with adding the tab to the facebook page.
+ * the request comes from selectFacebookPage where the specific facebook page is selected by the user
+ */
 Route::post('dashboard/createFacebookTab', function (\Illuminate\Http\Request $request){
-    require_once __DIR__ . '../vendor/autoload.php';
+    require_once __DIR__ . '/../vendor/autoload.php';
 
     $fb = new Facebook\Facebook([
         'app_id' => '373936209778018',
@@ -163,10 +182,11 @@ Route::post('dashboard/createFacebookTab', function (\Illuminate\Http\Request $r
         $helper->getPersistentDataHandler()->set('state', $_GET['state']);
     }
 
-    echo $request->page;
-    echo Input::get('accessToken');
+    $page = $fb->get('/' . $request->page . '?fields=access_token, name, id',\Illuminate\Support\Facades\Session::get('access_token'));
+    $page = $page->getGraphNode()->asArray();
+    $addTab = $fb->post('/' . $page['id'] . '/tabs', array('app_id' => '373936209778018'), $page['access_token']);
+    $addTab = $addTab->getGraphNode()->asArray();
 
-
-
+    return redirect()->route('dashboard');
 
 })->name('createFacebookTab');

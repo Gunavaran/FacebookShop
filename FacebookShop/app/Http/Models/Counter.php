@@ -23,6 +23,7 @@ class Counter extends Model
     protected $table = 'view';
     protected $primaryKey = 'view_id';
 
+    //get the number of photos available in a particular shop.
     public function getCount($photoId)
     {
         $count = Counter::where('photo_id', $photoId)->count();

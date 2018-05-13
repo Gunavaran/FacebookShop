@@ -16,6 +16,7 @@
     <title> Facebook Shop</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
     <link href="{{ url('css/fonticons.css') }}" rel="stylesheet" type="text/css"/>
@@ -167,14 +168,14 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="single_service_right">
+                    <div class="single_service_right" >
                         <div class="single_service">
                             <div class="single_service_icon">
                                 <i class="lnr lnr-laptop-phone"></i>
                             </div>
                             <div class="single_service_content">
                                 <h3>Create Your Shop</h3>
-                                <p>Design your own shop in a mouse click. You are your own boss. You can choose from
+                                <p style="font-size: large;">Design your own shop in a mouse click. You are your own boss. You can choose from
                                     multiple available templates
                                     which suits our business an taste.</p>
                             </div>
@@ -185,7 +186,7 @@
                             </div>
                             <div class="single_service_content">
                                 <h3>Business Analysis</h3>
-                                <p>Get to know your trending products. Get to know your peak business hours. Get to know
+                                <p style="font-size: large;">Get to know your trending products. Get to know your peak business hours. Get to know
                                     your
                                     least significant product. </p>
                             </div>
@@ -196,7 +197,7 @@
                             </div>
                             <div class="single_service_content">
                                 <h3>Showcase Your Products</h3>
-                                <p>No matter what products / services, showcase them to the world. How you are going to
+                                <p style="font-size: large;">No matter what products / services, showcase them to the world. How you are going to
                                     shocase them is in your hand.
                                     Add multiple images.... let the customers rate your products.... have a
                                     forum....</p>
@@ -208,7 +209,7 @@
                             </div>
                             <div class="single_service_content">
                                 <h3>Sell on Facebook</h3>
-                                <p>Make Facebook, the largest social network, our place of business. Capture the heart
+                                <p style="font-size: large;">Make Facebook, the largest social network, our place of business. Capture the heart
                                     of 2.2 billion users</p>
                             </div>
                         </div>
@@ -231,8 +232,6 @@
                             <p>We will be available 24 / 7 at your service. Ask any inquiries. Just drop a message and
                                 our team
                                 will get to you. </p>
-
-                            <a href="" class="btn btn-larg">Need to help? lets Chat <i class="lnr lnr-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

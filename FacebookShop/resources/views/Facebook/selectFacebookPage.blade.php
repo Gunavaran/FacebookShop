@@ -52,6 +52,8 @@
         $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
     }
 
+    \Illuminate\Support\Facades\Session::put('access_token',(string)$accessToken);
+
     $response = $fb->get("me?fields=id,first_name, last_name, email", $accessToken);
     $userData = $response->getGraphNode()->asArray();
 
@@ -71,8 +73,8 @@
                 </div>
                 <div class="x_content">
                     <form class="form-horizontal form-label-left" method="post"
-                          {{csrf_field()}}
-                          action="{{route('createFacebookTab',['accessToken' => $accessToken])}}">
+                          action="{{route('createFacebookTab')}}">
+                        {{csrf_field()}}
                         <div class="form-group">
                             <label class="control-label col-md-1 col-sm-1 col-xs-12">Select</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
@@ -90,7 +92,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                <button type="submit" class="btn btn-primary">Select</button>
+                                <button type="submit" name="submit" class="btn btn-primary">Select</button>
                             </div>
                         </div>
                     </form>
@@ -98,7 +100,5 @@
             </div>
         </div>
     </div>
-
-
 
 @endsection

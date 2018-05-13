@@ -44,7 +44,10 @@ class Product extends Model
         return $products;
     }
 
-    //rest of the methods are used in home page to do sorting purpose
+    /*
+     * rest of the methods are used in home page to do sorting purpose
+     * can be categorized based on category and different sorting mechanisms
+     */
     public function getHighPricedProducts($shopId)
     {
         $products = Product::where('shop_id', $shopId)->orderBy('price', 'DESC')->get();
@@ -85,6 +88,12 @@ class Product extends Model
     {
         $products = Product::where('shop_id', $shopId)->where('product_category', $productCategory)->orderBy('created_at', 'DESC')->get();
         return $products;
+    }
+
+    public function checkAvailability($productId)
+    {
+        $availability = Product::where('product_id', $productId)->value('availability');
+        return $availability;
     }
 
 }

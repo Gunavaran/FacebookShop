@@ -56,19 +56,23 @@ class Shop extends Model
         }
     }
 
+    //can get the shop details by giving the username and the required column name. [not shop_id]
     public function getShopDetails($username, $detail)
     {
         $infor = Shop::where('username', $username)->value($detail);
         return $infor;
     }
 
+    //can get the shop details based on the shop id
     public function getShopDetailsViaId($shopId, $detail)
     {
         $infor = Shop::where('shop_id', $shopId)->value($detail);
         return $infor;
     }
 
-    public function getShopCount(){
+    //get the number of shops available. used for the admin.
+    public function getShopCount()
+    {
         $count = Shop::count();
         return $count;
     }
