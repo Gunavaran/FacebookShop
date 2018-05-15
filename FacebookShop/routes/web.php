@@ -68,6 +68,8 @@ Route::get('dashboard/viewMyShop','ShopController@viewMyShop')->name('viewMyShop
 //contact form in the page for customer to contact vendor
 Route::post('storeShopMessage','FormController@storeShopMessage')->name('storeShopMessage');
 
+Route::any('shop/{shopId}','ShopController@displayShop')->name('displayShop');
+
 //=================================================Product======================================================
 
 Route::get('dashboard/newProduct','ProductController@showNewProductForm')-> name('showNewProductForm');

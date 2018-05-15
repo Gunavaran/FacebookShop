@@ -1,3 +1,5 @@
+{{--page which shows the customer details in the created shops--}}
+
 @extends('templates.titan.layout.layout')
 @section('content')
     <?php

@@ -8,6 +8,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="http://www.expertphp.in/js/jquery.form.js"></script>
 
+        {{--required for the image preview functionality--}}
         <script>
             function preview_images() {
                 var total_file = document.getElementById("images").files.length;
@@ -18,6 +19,7 @@
         </script>
     </head>
     <body>
+    {{--Form to upload photos -- only foe the photoraphy template--}}
     <div class="row">
 
         <form action="{{route('uploadPhotos')}}" method="POST" enctype="multipart/form-data">

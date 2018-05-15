@@ -7,7 +7,7 @@
                 <h3> Photo Gallery
                 </h3>
             </div>
-
+            {{--Search photo category--}}
             <div class="title_right">
                 <form action="{{route('search')}}" method="POST">
                     {{csrf_field()}}
@@ -59,6 +59,7 @@
 
         <div class="clearfix"></div>
 
+        {{--view photos--}}
         <div class="row">
             <div class="col-md-12">
                 <div class="x_panel">
@@ -68,8 +69,8 @@
 
                             if (!Session::has('searchCategory') or Session::get('searchCategory') == 'All') {
 
-                                $newPhoto = new Photo();
-                                $photos = $newPhoto->getPhotos($shopId);
+                            $newPhoto = new Photo();
+                            $photos = $newPhoto->getPhotos($shopId);
 
                             foreach ($photos as $photo) {
                             $photoId = $photo->photo_id;
@@ -78,10 +79,12 @@
                                 <div class="thumbnail">
                                     <div class="image view view-first">
                                         <img style="width: 100%; display: block;"
-                                             src="{{URL::asset('storage/'.$shopId.'/thumbnails/'.$photo->file_name)}}" alt="image"/>
+                                             src="{{URL::asset('storage/'.$shopId.'/thumbnails/'.$photo->file_name)}}"
+                                             alt="image"/>
                                         <div class="mask">
                                             <div class="tools tools-bottom">
-                                                <a style="float: left" data-toggle="confirmation" href="{{route('removePhoto',['photoId' =>$photoId ])}}"><i
+                                                <a style="float: left" data-toggle="confirmation"
+                                                   href="{{route('removePhoto',['photoId' =>$photoId ])}}"><i
                                                             class="fa fa-times"></i></a>
                                             </div>
                                         </div>
@@ -96,21 +99,23 @@
                             <?php
                             }
                             } else{
-                                $newPhoto = new Photo();
-                                $photos = $newPhoto->getCategorizedPhotos($shopId,Session::get('searchCategory'));
+                            $newPhoto = new Photo();
+                            $photos = $newPhoto->getCategorizedPhotos($shopId, Session::get('searchCategory'));
 
 
                             foreach ($photos as $photo) {
-                                $photoId = $photo->photo_id;
+                            $photoId = $photo->photo_id;
                             ?>
                             <div class="col-md-55">
                                 <div class="thumbnail">
                                     <div class="image view view-first">
                                         <img style="width: 100%; display: block;"
-                                             src="{{URL::asset('storage/'.$shopId.'/thumbnails/'.$photo->file_name)}}" alt="image"/>
+                                             src="{{URL::asset('storage/'.$shopId.'/thumbnails/'.$photo->file_name)}}"
+                                             alt="image"/>
                                         <div class="mask">
                                             <div class="tools tools-bottom">
-                                                <a style="float: left" data-toggle="confirmation" href="{{route('removePhoto',['photoId' =>$photoId ])}}"><i
+                                                <a style="float: left" data-toggle="confirmation"
+                                                   href="{{route('removePhoto',['photoId' =>$photoId ])}}"><i
                                                             class="fa fa-times"></i></a>
                                             </div>
                                         </div>
@@ -124,6 +129,7 @@
                             </div>
                             <?php
                             }
+//                            forget search category, otherwise it will remain the same forever
                             Session::forget('searchCategory');
                             }
                             ?>

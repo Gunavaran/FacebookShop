@@ -229,6 +229,7 @@ class ProductController extends Controller
 
     }
 
+    //only for photography template
     public function search(Request $request)
     {
         Session::put('searchCategory', $request['searchCategory']);

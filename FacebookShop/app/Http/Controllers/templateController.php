@@ -44,11 +44,13 @@ class templateController
 
     }
 
+    //form to upload/delete slider images
     public function designTemplate()
     {
         return view('designTemplate');
     }
 
+    //form to upload/delete slider text
     public function designTemplateText()
     {
         return view('designTemplateText');
@@ -133,6 +135,10 @@ class templateController
         return redirect()->route('showTemplateHome');
     }
 
+
+    /*
+     * when clicked on a particular product, page with all the details will be shown
+     */
     public function singleProduct()
     {
         return view('templates.titan.singleProduct');
@@ -143,6 +149,8 @@ class templateController
         return view('templates.titan.accountSettings');
     }
 
+
+    //only for photography template
     public function gallery()
     {
         return view('templates.photography.gallery');

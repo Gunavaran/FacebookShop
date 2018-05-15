@@ -60,11 +60,13 @@ class ShopController extends Controller
         return redirect()->route('dashboard');
     }
 
+    //shop details tab
     public function showShopDetails()
     {
         return view('shopDetails', ['username' => Session::get('username')]);
     }
 
+    //when the update request is given from the shop details page
     public function updateShopData(Request $request)
     {
         $this->validate($request, [
@@ -95,6 +97,7 @@ class ShopController extends Controller
         return redirect()->route('showShopDetails');
     }
 
+    //view my shop tab
     public function viewMyShop()
     {
         $shop = new Shop();
@@ -107,6 +110,22 @@ class ShopController extends Controller
             Session::put('siteShopId', Session::get('shopId'));
             return view('templates.photography.home');
         }
+    }
+
+    //to redirect the http requests
+    //now works on shopId, needs to be changed to shop name
+    public function displayShop($shopId){
+        $shop = new Shop();
+        $shopTemplate = $shop->getShopDetailsViaId($shopId,'template');
+        Session::put('template', $shopTemplate);
+        if ($shopTemplate == 'titan') {
+            Session::put('siteShopId', $shopId);
+            return view('templates.titan.home');
+        } else if ($shopTemplate == 'photography') {
+            Session::put('siteShopId', $shopId);
+            return view('templates.photography.home');
+        }
+
     }
 
 }

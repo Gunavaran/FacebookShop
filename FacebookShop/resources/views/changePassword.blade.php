@@ -17,6 +17,7 @@
                     <br />
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="{{route('updatePassword')}}"  method="POST">
                         {{csrf_field()}}
+                        {{--to display any errors during validation--}}
                         @if(count($errors) > 0)
                             @foreach($errors->all() as $error)
                                 <p class="alert alert-danger"> {{$error}}</p>
@@ -28,7 +29,7 @@
                             {{Session::get("error")}}
                         </div>'
                         @endif
-
+                        {{--displays the success message if the password change process is a success--}}
                         @if(Session::has('success'))
                             <div class="alert alert-success alert-dismissible fade in" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>

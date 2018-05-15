@@ -4,7 +4,6 @@
     <?php
     use Illuminate\Support\Facades\Session;
     use App\Http\Models\Shop;
-    use App\Http\Models\Product;
 
     $shop = new Shop();
     if( $shop->checkShopExist(Session::get('username')) == true){
@@ -12,6 +11,9 @@
     $count = $shop->getCustomerCount($shopId);
 
     ?>
+
+
+<!--    display the number of customers count for the shop-->
     <div class="">
         <div class="row top_tiles">
 
@@ -36,6 +38,8 @@
 
 
     ?>
+
+<!--   displays the welcome message when logged in-->
     <div class="x_content">
 
         <div class="bs-example" data-example-id="simple-jumbotron">
@@ -60,9 +64,10 @@
     $shopCount = $shop->getShopCount();
     ?>
 
+
     <div class="">
         <div class="row top_tiles">
-
+            {{--display the number of users for the admin--}}
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-group"></i></div>
@@ -71,7 +76,7 @@
                     <p></p>
                 </div>
             </div>
-
+            {{--display the number od shops available--}}
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-shopping-cart"></i></div>
@@ -81,6 +86,7 @@
                 </div>
             </div>
 
+            {{--display the new signups during the last 7 days--}}
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-sign-in"></i></div>

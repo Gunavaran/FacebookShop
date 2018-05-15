@@ -7,7 +7,10 @@
 
     $customerId = Session::get('customerId');
     $newCheckout = new Checkout();
+
+    //to obtain the checkouts related to that customer
     $checkouts = $newCheckout->getCheckoutDetails($customerId);
+
     $product = new Product();
     $shopId = Session::get('siteShopId');
 
@@ -36,6 +39,7 @@
                             <th>Remove</th>
                         </tr>
                         <?php
+
                         foreach($checkouts as $checkout){
                             $productId = $checkout->product_id;
                             $image = $product->getProductDetails($productId,'file_name');

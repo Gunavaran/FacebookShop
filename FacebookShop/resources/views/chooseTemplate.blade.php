@@ -22,7 +22,7 @@
                     <div class="x_content">
 
                         <div class="row">
-
+                            {{--to show the demo, when demo button is clicked--}}
                             <div class="col-md-6">
                                 <div class="carousel-item-prev">
                                     <div class="image view view-first">
@@ -47,6 +47,7 @@
                                 </div>
                             </div>
 
+                            {{--to set the template for the shop when the select button is pressed--}}
                             <div class="col-md-6">
                                 <div class="carousel-item-prev">
                                     <div class="image view view-first">
